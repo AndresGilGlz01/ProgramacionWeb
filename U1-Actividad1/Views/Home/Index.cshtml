@@ -1,9 +1,12 @@
 ﻿@model U1_Actividad1.Models.ViewModels.IndexViewModel
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Inicio";
 }
 
-<p>Nombre: @Model.Nombre</p>
-<p>Nombre de materia: @Model.NombreMateria</p>
-<p>Periodo: @Model.Periodo</p>
-<p>Semestre: @Model.Semestre</p>
+<div class="info">
+    <p><span>Nombre:</span> @Model.Nombre</p>
+    <p><span>Nombre de materia:</span> @Model.NombreMateria</p>
+    <p><span>Periodo:</span> @Model.Periodo</p>
+    <p><span>Semestre:</span> @Model.Semestre</p>
+</div>

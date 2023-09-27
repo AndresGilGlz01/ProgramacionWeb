@@ -1,7 +1,15 @@
 ﻿@model U1_Actividad1.Models.ViewModels.MiPerfilViewModel
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Mi Perfil";
 }
 
-<h1>Nombre completo: @Model.NombreCompleto</h1>
-<p>Numero de control: @Model.NumeroControl</p>
+<div class="info">
+    <p> <span>Nombre completo:</span> @Model.NombreCompleto</p>
+    <p> <span>Numero de control:</span> @Model.NumeroControl</p>
+    <p> <span>Correo:</span> @Model.Correo</p>
+    <p> <span>Celular:</span> @Model.Celular</p>
+</div>
+<div class="img">
+    <img src="/img/@(Model.NombreCompleto.Replace(" ", "-").ToLower()).jpg"/>
+</div>

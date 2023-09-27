@@ -24,7 +24,9 @@ public class HomeController : Controller
         var miperfilViewModel = new MiPerfilViewModel()
         {
             NombreCompleto = "Andres Gil Gonzalez Ortiz",
-            NumeroControl = "201G0257"
+            NumeroControl = "201G0257",
+            Correo = "andresgilgonzalez@outlook.com",
+            Celular = "+52 861-615-4019"
         };
 
         return View(miperfilViewModel);
