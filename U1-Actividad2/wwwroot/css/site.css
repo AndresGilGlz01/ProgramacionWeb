@@ -4,3 +4,24 @@ html {
     font-size: 14px;
 }
 
+body {
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
+}
+
+header {
+    background: #9d3838;
+}
+
+h1 {
+    margin: 0px;
+    padding: 10px;
+    color: #f4f4f4;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}

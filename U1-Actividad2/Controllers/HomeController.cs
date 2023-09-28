@@ -15,10 +15,10 @@ public class HomeController : Controller
 
         if (vm.Conversion == "MX")
         {
-            vm.Resultado = vm.Cantidad / 18m;
+            vm.Resultado = (vm.Cantidad / 18m).ToString($"$0.00 USD");
         }
         else if (vm.Conversion == "USD") {
-            vm.Resultado = vm.Cantidad * 18m;
+            vm.Resultado = (vm.Cantidad * 18m).ToString($"$0.00 MXN");
         }
 
         return View(vm);

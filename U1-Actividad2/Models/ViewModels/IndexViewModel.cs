@@ -4,5 +4,5 @@ public class IndexViewModel
 {
     public decimal Cantidad { get; set; }
     public string Conversion { get; set; } = null!;
-    public decimal Resultado { get; set; }
+    public string Resultado { get; set; } = null!;
 }
