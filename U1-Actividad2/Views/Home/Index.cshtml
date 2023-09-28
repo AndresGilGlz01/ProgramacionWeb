@@ -1,0 +1,23 @@
+﻿@model U1_Actividad2.Models.ViewModels.IndexViewModel
+@{
+    Layout = "_Layout";
+}
+
+<form action="/Home/Index">
+    <div>
+        <label for="Cantidad">Cantidad:</label>
+        <input type="number" value="@Model.Cantidad" name="Cantidad" />
+    </div>
+
+    <div>
+        <label for="Conversion">Conversion destino:</label>
+        <select name="Conversion">
+            <option value="MX">MX</option>
+            <option value="USD">USD</option>
+        </select>
+    </div>
+
+    <input type="submit" value="Convertir" />
+</form>
+
+<p> @Model.Resultado </p>
