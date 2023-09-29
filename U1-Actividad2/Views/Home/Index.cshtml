@@ -10,14 +10,27 @@
     </div>
 
     <div>
-        <label for="Conversion">Conversion destino:</label>
-        <select name="Conversion">
-            <option value="MX">MX</option>
-            <option value="USD">USD</option>
-        </select>
+        <label>Conversion origen:</label>
+
+        <input type="radio" id="OrigenMxn" name="conversionOrigen" value="MXN" @(Model.conversionOrigen == "MXN" ? "checked" : string.Empty)/>
+        <label for="OrigenMxn">MXN</label>
+
+        <input type="radio" id="OrigenUsd" name="conversionOrigen" value="USD" @(Model.conversionOrigen == "USD" ? "checked" : string.Empty) />
+        <label for="OrigenUsd">USD</label>
+
+        <br />
+
+        <label>Conversion destino:</label>
+
+        <input type="radio" id="DestinoMxn" name="conversionDestino" value="MXN" @(Model.conversionDestino == "MXN" ? "checked" : string.Empty) />
+        <label for="DestinoMxn">MXN</label>
+
+        <input type="radio" id="DestinoUsd" name="conversionDestino" value="USD" @(Model.conversionDestino == "USD" ? "checked" : string.Empty) />
+        <label for="DestinoUsd">USD</label>
     </div>
 
     <input type="submit" value="Convertir" />
+
+    <p> @Model.Resultado </p>
 </form>
 
-<p> @Model.Resultado </p>

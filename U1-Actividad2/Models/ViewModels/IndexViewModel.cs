@@ -3,6 +3,7 @@
 public class IndexViewModel
 {
     public decimal Cantidad { get; set; }
-    public string Conversion { get; set; } = null!;
+    public string conversionOrigen { get; set; } = null!;
+    public string conversionDestino { get; set; } = null!;
     public string Resultado { get; set; } = null!;
 }
