@@ -1,0 +1,23 @@
+@model IEnumerable<U2_Actividad1.Models.ViewModels.IndexViewModel>
+@{
+    Layout = "_Layout";
+}
+
+<div class="slides">
+    <img src="~/images/carousel1.jpg" />
+</div>
+
+<h1>Clasificación de los vertebrados</h1>
+
+<div class="clases">
+    @foreach (var c in Model)
+    {
+        <div>
+            <a href="~/Especies/Clase/@(c.Clase)">
+                <img src="~/clases/@(c.Id).jpg" />
+                <h1>@c.Clase</h1>
+                <p>@c.Description</p>
+            </a>
+        </div>
+    }
+</div>

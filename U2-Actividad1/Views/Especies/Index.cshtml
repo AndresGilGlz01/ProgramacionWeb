@@ -1,0 +1,25 @@
+@model IEnumerable<U2_Actividad1.Models.ViewModels.EspeciesViewModel>
+@{
+    Layout = "_Layout";
+}
+
+@foreach (var e in Model)
+{
+    <h1>
+        <img src="~/clases/@(e.IdClase).png" /> @e.Clase
+    </h1>
+
+    <div class="listaEspecies2">
+        @foreach (var es in e.Especies)
+        {
+            <a href="~/Especies/Especie/@es.Nombre.Replace(" ","-")">
+                <img src="~/especies/@(es.IdEspecie).jpg" title="@es.Nombre" />
+            </a>
+        }
+    </div>
+}
+
+<script>
+    var c = document.querySelector("main h1 img").cloneNode();
+    document.querySelector("main h1").appendChild(c);
+</script>
