@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad3", "U2-Activid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad1", "U2-Actividad1\U2-Actividad1.csproj", "{CD13E760-0790-4A73-9659-FFE4DB189C61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad2", "U2-Actividad2\U2-Actividad2.csproj", "{41FD407F-ABC2-4551-97DA-1FFC9BED600E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{CD13E760-0790-4A73-9659-FFE4DB189C61}.Release|x64.Build.0 = Release|Any CPU
 		{CD13E760-0790-4A73-9659-FFE4DB189C61}.Release|x86.ActiveCfg = Release|Any CPU
 		{CD13E760-0790-4A73-9659-FFE4DB189C61}.Release|x86.Build.0 = Release|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Debug|x64.Build.0 = Debug|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Debug|x86.Build.0 = Debug|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Release|x64.ActiveCfg = Release|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Release|x64.Build.0 = Release|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Release|x86.ActiveCfg = Release|Any CPU
+		{41FD407F-ABC2-4551-97DA-1FFC9BED600E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
