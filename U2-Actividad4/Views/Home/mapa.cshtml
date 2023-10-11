@@ -1,0 +1,40 @@
+@model U2_Actividad4.Models.ViewModels.MapaViewModel
+@{
+    Layout = "_layout";
+}
+
+<h1>
+    <a class="btn" href="javascript: history.back()">&#x25c0; Regresar</a>
+    @Model.NombreCarrera
+</h1>
+
+<h2>@Model.Plan</h2>
+<h2>Total de creditos: @Model.TotalCreditos</h2>
+<section class="reticula">
+    <table>
+        <thead>
+            <tr>
+                @foreach (var semestre in Model.Semestres)
+                {
+                    <th>@semestre.Numero semestre</th>
+                }
+            </tr>
+        </thead>
+
+        <tr>
+            @foreach (var semestre in Model.Semestres)
+            {
+                <td>
+                    @foreach(var materia in semestre.Materias)
+                    {
+                        <div class="materia">
+                            <span class="clave">@materia.Clave</span>
+                            <span class="nombre">@materia.Nombre</span>
+                            <span class="tpc">2-3-5</span>
+                        </div>
+                    }
+                </td>
+            }
+        </tr>
+    </table>
+</section>
