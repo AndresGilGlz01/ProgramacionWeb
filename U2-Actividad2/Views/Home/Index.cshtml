@@ -7,15 +7,16 @@
     <h3>ABC de Razas</h3>
     <nav>
         <a href="~/">Todas</a>
-        <a href="~/">A</a>
-        <a href="~/">B</a>
-        <a href="~/">C</a>
+        @foreach (var inicial in Model.Iniciales)
+        {
+            <a href="~/Home/Letra/@inicial">@inicial</a>
+        }
         <a href="~/Paises">Listado por país</a>
     </nav>
 </section>
 <section class="list">
     <ul>
-        @foreach(var raza in Model.Razas)
+        @foreach (var raza in Model.Razas)
         {
             <li>
                 <a href="~/Raza/@raza.Nombre.Replace(" ", "-")">

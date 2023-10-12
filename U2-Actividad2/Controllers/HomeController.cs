@@ -9,20 +9,46 @@ public class HomeController : Controller
 {
     private readonly PerrosContext _context = new();
 
-    public IActionResult Index()
+    [Route("/")]
+    [Route("[controller]/Letra/{Id?}")]
+    public IActionResult Index(string? Id)
     {
-        var viewModel = new IndexViewModel
+        if (string.IsNullOrEmpty(Id))
         {
-            Razas = _context.Razas
-            .OrderBy(r => r.Nombre)
-            .Select(r => new RazaModel
+            var viewModel = new IndexViewModel
             {
-                Id = (int)r.Id,
-                Nombre = r.Nombre
-            })
-        };
-
-        return View(viewModel);
+                Iniciales = _context.Razas
+                    .Select(r => r.Nombre.Substring(0, 1))
+                    .Distinct()
+                    .OrderBy(r => r),
+                Razas = _context.Razas
+                .OrderBy(r => r.Nombre)
+                .Select(r => new RazaModel
+                {
+                    Id = (int)r.Id,
+                    Nombre = r.Nombre
+                })
+            };
+            return View(viewModel);
+        }
+        else
+        {
+            var viewModel = new IndexViewModel
+            {
+                Iniciales = _context.Razas
+                    .Select(r => r.Nombre.Substring(0, 1))
+                    .Distinct()
+                    .OrderBy(r => r),
+                Razas = _context.Razas
+                    .Where(r => r.Nombre.StartsWith(Id))
+                    .Select(r => new RazaModel
+                    {
+                        Id = (int)r.Id,
+                        Nombre = r.Nombre
+                    })
+            };
+            return View(viewModel);
+        }
     }
 
     [Route("Raza/{nombre_raza}")]

@@ -2,6 +2,7 @@
 
 public class IndexViewModel
 {
+    public IEnumerable<string> Iniciales { get; set; } = Enumerable.Empty<string>();
     public IEnumerable<RazaModel> Razas { get; set; } = Enumerable.Empty<RazaModel>();
 }
 
