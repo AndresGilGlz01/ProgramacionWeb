@@ -95,6 +95,7 @@ public class HomeController : Controller
                         Id = (int)r.Id,
                         Nombre = r.Nombre
                     })
+                    .OrderBy(r => EF.Functions.Random())
                     .Take(4)
                     .ToList()
             })
