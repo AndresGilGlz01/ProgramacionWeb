@@ -1,0 +1,11 @@
+﻿@model IEnumerable<string>
+@{
+    Layout = "_Layout";
+}
+
+<ul>
+    @foreach (var nombre in Model)
+    {
+        <li><a href="~/Villancico/@(nombre.Replace(" ", "-"))">@nombre</a></li>
+    }
+</ul>

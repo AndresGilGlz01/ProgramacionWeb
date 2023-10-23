@@ -1,0 +1,16 @@
+﻿@model U3_Actividad1.Models.ViewModels.VillancicoViewModel
+@{
+    Layout = "_Layout";
+}
+
+<nav>
+    <a href="javascript:window.history.back();">Regresar</a>
+</nav>
+<h2>@Model.Nombre</h2>
+<h3>@(Model.Compositor), @(Model.Año)</h3>
+
+<iframe width="560" height="315" src="@(Model.Url)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<article>
+    @Html.Raw(Model.Letra)
+</article>

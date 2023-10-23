@@ -18,4 +18,7 @@ public class MateriaModel
 {
     public string Clave { get; set; } = null!;
     public string Nombre { get; set; } = null!;
+    public int HorasTeoricas { get; set; }
+    public int HorasPracticas { get; set; }
+    public int Creditos { get; set; }
 }

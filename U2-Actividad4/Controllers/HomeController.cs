@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using U2_Actividad4.Models.ViewModels;
 using U2_Actividad4.Models.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace U2_Actividad4.Controllers;
 
@@ -77,7 +76,10 @@ public class HomeController : Controller
                         Materias = s.Select(m => new MateriaModel
                         {
                             Clave = m.Clave,
-                            Nombre = m.Nombre
+                            Nombre = m.Nombre,
+                            HorasTeoricas = m.HorasTeoricas,
+                            HorasPracticas = m.HorasPracticas,
+                            Creditos = m.Creditos
                         })
                     })
                     .ToList()
