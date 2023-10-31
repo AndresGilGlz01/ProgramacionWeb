@@ -7,15 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U1-Actividad1", "U1-Activid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U1-Actividad2", "U1-Actividad2\U1-Actividad2.csproj", "{7D030EC5-65B5-48D6-9D8A-7207E276BC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad3", "U2-Actividad3\U2-Actividad3.csproj", "{CE06CFED-58F2-4D67-B885-E4DCC304F5A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2-Actividad3", "U2-Actividad3\U2-Actividad3.csproj", "{CE06CFED-58F2-4D67-B885-E4DCC304F5A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad1", "U2-Actividad1\U2-Actividad1.csproj", "{CD13E760-0790-4A73-9659-FFE4DB189C61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2-Actividad1", "U2-Actividad1\U2-Actividad1.csproj", "{CD13E760-0790-4A73-9659-FFE4DB189C61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad2", "U2-Actividad2\U2-Actividad2.csproj", "{41FD407F-ABC2-4551-97DA-1FFC9BED600E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2-Actividad2", "U2-Actividad2\U2-Actividad2.csproj", "{41FD407F-ABC2-4551-97DA-1FFC9BED600E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U2-Actividad4", "U2-Actividad4\U2-Actividad4.csproj", "{D52E78E6-949A-4B88-98A4-C10217A2D8C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U2-Actividad4", "U2-Actividad4\U2-Actividad4.csproj", "{D52E78E6-949A-4B88-98A4-C10217A2D8C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U3-Actividad1", "U3-Actividad1\U3-Actividad1.csproj", "{97017464-C510-4DC2-A4B2-1BB347879214}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U3-Actividad1", "U3-Actividad1\U3-Actividad1.csproj", "{97017464-C510-4DC2-A4B2-1BB347879214}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U5-Proyecto-Blog", "U5-Proyecto-Blog\U5-Proyecto-Blog.csproj", "{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,18 @@ Global
 		{97017464-C510-4DC2-A4B2-1BB347879214}.Release|x64.Build.0 = Release|Any CPU
 		{97017464-C510-4DC2-A4B2-1BB347879214}.Release|x86.ActiveCfg = Release|Any CPU
 		{97017464-C510-4DC2-A4B2-1BB347879214}.Release|x86.Build.0 = Release|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Debug|x64.Build.0 = Debug|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Debug|x86.Build.0 = Debug|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Release|x64.ActiveCfg = Release|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Release|x64.Build.0 = Release|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Release|x86.ActiveCfg = Release|Any CPU
+		{26FFFD2C-A16B-4871-A76F-F3FC39CD338F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

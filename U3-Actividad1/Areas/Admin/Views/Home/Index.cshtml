@@ -1,12 +1,13 @@
-﻿@{
+﻿@model U3_Actividad1.Areas.Admin.Models.AdminIndexViewModel
+@{
 	Layout = "AdminLayout";
 }
 
 <section>
 	<table>
 		<caption>
-			<h2>Villancicos </h2>
-			<a href="#">&#10010;Agregar nuevo</a>
+			<h2>Villancicos</h2>
+			<a href="~/Admin/Villancicos/Agregar">&#10010;Agregar nuevo</a>
 		</caption>
 		<thead>
 			<tr>
@@ -16,24 +17,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>Mi burrito sabanero</td>
-				<td><a href="#">&#9998;</a></td>
-				<td><a href="#">&#10008;</a></td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>Mi burrito sabanero</td>
-				<td><a href="#">&#9998;</a></td>
-				<td><a href="#">&#10008;</a></td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>Mi burrito sabanero</td>
-				<td><a href="#">&#9998;</a></td>
-				<td><a href="#">&#10008;</a></td>
-			</tr>
+			@{
+				int count = 1;
+			}
+			@foreach(var villancico in Model.Villancicos)
+			{
+				<tr>
+					<td>@(count++)</td>
+					<td>@villancico.Nombre</td>
+					<td><a href="~/Admin/Villancicos/Editar/@villancico.Id">&#9998;</a></td>
+					<td><a href="~/Admin/Villancicos/Eliminar/@villancico.Id">&#10008;</a></td>
+				</tr>
+			}			
 		</tbody>
 	</table>
 </section>
