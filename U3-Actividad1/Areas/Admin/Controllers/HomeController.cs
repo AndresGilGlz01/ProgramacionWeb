@@ -28,4 +28,9 @@ public class HomeController : Controller
 
         return View(viewModels);
     }
+
+    public IActionResult Guardar()
+    {
+        return View();
+    }
 }

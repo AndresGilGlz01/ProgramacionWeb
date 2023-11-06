@@ -1,4 +1,32 @@
-﻿<section>
+﻿@{
+    Layout = "AdminLayout";
+}
+<script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        language: 'es_MX',
+    });
+    let timer = setTimeout(() => {
+
+        let promo = document.querySelector('.tox-notification');
+        let title = document.querySelector('.tox-statusbar__right-container');
+
+        title.style.display = 'none';
+
+        if (promo) {
+            promo.style.display = 'none';
+        }
+        else {
+            promo = document.querySelector('.tox-promotion');
+        }
+
+        promo.style.display = 'none';
+
+    }, 100)
+</script>
+
+<section>
     <form>
         <div class="caption">
             <h2>Agregar villancico</h2>
