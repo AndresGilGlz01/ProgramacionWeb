@@ -1,0 +1,20 @@
+﻿@inject U3_Actividad2.Repositories.Repository<U3_Actividad2.Models.Entities.Categorias> Repository
+<html>
+<head>
+    <title>FruitStore - La mejor fruteria de la Web</title>
+    <link href="~/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header></header>
+    <nav>
+        <a href="~/">Principal</a>
+        @foreach(var categoria in Repository.GetAll())
+        {
+            <a href="~/Home/Productos/@(categoria.Nombre.Replace(" ", "-"))">@categoria.Nombre</a>
+        }
+    </nav>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>

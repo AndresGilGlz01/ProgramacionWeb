@@ -1,0 +1,19 @@
+﻿@model U3_Actividad2.Models.ViewModels.ProductosViewModel
+@{
+    Layout = "_Layout";
+}
+
+<h1 id="nombreCategoria">@Model.Categoria</h1>
+
+<div class="productos">    
+    @foreach(var producto in Model.Productos)
+    {
+        <a href="~/Home/Ver/@(producto.Nombre.Replace(" ", "-"))">
+            <div>
+                <img src="~/img_frutas/@(producto.Id).jpg">
+            </div>
+            <h2>@producto.Nombre</h2>
+            <h3>@producto.Precio.ToString("$0.00")</h3>
+        </a>
+    }
+</div>
