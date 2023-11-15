@@ -1,0 +1,22 @@
+﻿@model U3_Actividad2.Areas.Admin.Models.ViewModels.AdminCategoriaViewModel
+@{
+    ViewData["Title"] = "Categorias";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Administrar Categorias</h1>
+
+<section class="lista">
+    <ul>
+        <li><a href="~/Admin/Categorias/Agregar"><img src="~/images/add.png" />Nueva categoria</a></li>
+        
+        @foreach (var categoria in Model.Categorias)
+        {
+            <li>
+                @categoria.Nombre
+                <a href="~/admin/categorias/editar/@(categoria.Id)" class="btnEditar"></a>
+                <a href="~/admin/categorias/eliminar/@(categoria.Id)" class="btnBorrar"></a>
+            </li>
+        }
+    </ul>
+</section>

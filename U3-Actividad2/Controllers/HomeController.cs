@@ -36,9 +36,25 @@ public class HomeController : Controller
         return View(viewModel);
     }
 
-    public IActionResult Ver()
+    public IActionResult Ver(string Id)
     {
-        return View();
+        Id = Id.Replace("-", " ");
+
+        var producto = ProductosRepository.GetProductosByNombre(Id);
+
+        if (producto == null) return RedirectToAction("Index");
+
+        var viewModel = new VerProductoViewModel()
+        {
+            Id = producto.Id,
+            Nombre = producto.Nombre ?? string.Empty,
+            Categoria = producto.IdCategoriaNavigation!.Nombre ?? string.Empty,
+            Precio = producto.Precio != null ? producto.Precio.Value : 0m,
+            UnidadMedida = producto.UnidadMedida ?? string.Empty,
+            Descripcion = producto.Descripcion ?? string.Empty
+        };
+
+        return View(viewModel);
     }
 
 }

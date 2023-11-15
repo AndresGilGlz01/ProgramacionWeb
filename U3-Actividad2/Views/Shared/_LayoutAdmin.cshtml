@@ -9,13 +9,12 @@
 <body>
     <header></header>
     <nav>
-        <a href="~/Administrador">Principal</a>
-        <a href="~/Administrador/Categorias">Administrar Categorias</a>
-        <a href="~/Administrador/Productos">Administrar Productos</a>
-        <a href="~/Home/CerrarSesion">Cerrar sesión</a>
+        <a href="~/Admin">Principal</a>
+        <a href="~/Admin/Categorias">Administrar Categorias</a>
+        <a href="~/Admin/Productos">Administrar Productos</a>
     </nav>
     <main>
-        <p>Bienvenido @User.Identity?.Name (@User.Claims.FirstOrDefault(x=> x.Type=="Carrera")?.Value)</p>
+        <h2>Bienvenido, Administrador</h2>
         @RenderBody()
     </main>
 </body>
