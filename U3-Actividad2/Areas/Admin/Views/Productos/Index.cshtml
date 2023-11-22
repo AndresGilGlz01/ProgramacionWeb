@@ -1,0 +1,27 @@
+﻿@model U3_Actividad2.Areas.Admin.Models.ViewModels.AdminProductosViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Administrar Productos</h1>
+
+<section class="lista">
+    <form asp-action="Index" asp-controller="Productos" asp-area="Admin">
+        <select onchange="this.form.submit()" asp-for="SelectedCategoriaId" asp-items="@(new SelectList(Model.Categorias, "Id", "Nombre"))">
+            <option>---Mostrar todos los productos---</option>
+        </select>
+    </form>
+    <ul>
+        <li><a href="~/Admin/Productos/Agregar"><img src="~/images/add.png" />Nuevo producto</a></li>
+        @foreach (var producto in Model.Productos)
+        {
+            <li>
+                @(Model.SelectedCategoriaId != 0 ? producto.Nombre : $"{producto.Nombre} - {producto.Categoria}")
+                <a href="~/Admin/Productos/Editar/@(producto.Nombre)" class="btnEditar"></a>
+                <a href="~/Admin/Productos/Eliminar/@(producto.Nombre)" class="btnBorrar"></a>
+            </li>
+        }
+    </ul>
+</section>
