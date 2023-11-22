@@ -1,1 +1,77 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1 class="logotxt"><span>Game</span>Tec</h1>
+        </div>
+        <ul class="nav">
+            <li><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+            <li><a asp-action="Index" asp-controller="Categorias">Categorias</a></li>
+            <li>
+                <a asp-action="Login" asp-controller="Home">
+                    <i class="fa fa-user"></i>
+                    Iniciar Sesion
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    @RenderBody()
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h1 class="logotxt"><span>Game</span>Tec</h1>
+                <p>
+                    Nuestro objetivo principal es generar interés y motivar a los
+                    visitantes a explorar más a fondo el sitio para
+                    disfrutar de experiencias relacionadas con los videojuegos.
+                </p>
+                <div class="contact">
+                    <span><i class="fas fa-phone"></i>&nbsp;123-456-789</span>
+                    <span><i class="fas fa-envelope"></i>&nbsp;info@sitioweb.com</span>
+                </div>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section contact-form">
+                <h2>Contactanos</h2>
+                <br>
+                <form action="~/Contacto" method="post">
+                    <input type="email" name="email" class="text-input contact-input" placeholder="email...">
+                    <textarea rows="4" name="message" class="text-input contact-input" placeholder="Escribe tu mensaje..."></textarea>
+                    <button type="submit" class="btn btn-big contact-btn">
+                        <i class="fas fa-envelope"></i>
+                        Enviar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; sitioweb.com | By EquipoInsano
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="scripts.js"></script>
+
+</body>
+</html>

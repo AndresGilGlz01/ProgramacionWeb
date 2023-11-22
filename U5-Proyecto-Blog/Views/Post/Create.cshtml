@@ -1,0 +1,54 @@
+﻿@model U5_Proyecto_Blog.Models.ViewModels.Post.GuardarPostViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Crear post";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+}
+
+<script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#mytextarea'
+    });
+</script>
+<div class="admin-wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a asp-controller="Posts" asp-action="Index">Administrar Posts</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="content">
+            <h2 class="page-title">Administrar posts</h2>
+            <form method="post" asp-controller="Post" asp-action="Create">
+                <div>
+                    <label>Titulo</label>
+                    <input asp-for="Titulo" class="text-input">
+                </div>
+                <div>
+                    <label>Texto</label>
+                    <textarea name="Contenido" id="mytextarea">
+                        @Html.Raw(Model.Contenido)
+                    </textarea>
+                </div>
+                <div>
+                    <label>Categorias</label> <br />
+
+                    @for (var i = 0; i < Model.Categorias.Count(); i++)
+                    {
+                        <label for="@(Model.Categorias[i].Nombre)">@Model.Categorias[i].Nombre</label>
+                        <input asp-for="Categorias[i].IdCategoria" hidden />
+                        <input asp-for="Categorias[i].Nombre" hidden />
+                        <input asp-for="Categorias[i].Seleccionada" id="@(Model.Categorias[i].Nombre)" />
+                    }
+
+                    @Html.ValidationSummary(true)
+
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-big">Agregar post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
