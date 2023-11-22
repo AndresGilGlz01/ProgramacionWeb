@@ -94,7 +94,78 @@ public class ProductosController : Controller
 
         if (viewModel.Archivo is null)
         {
-            
+            System.IO.File.Copy("wwwroot/img_frutas/0.jpg", $"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg");   
+        }
+        else
+        {
+            var fs = new FileStream($"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg", FileMode.Create);
+            viewModel.Archivo.CopyTo(fs);
+            fs.Close();
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Editar(int Id)
+    {
+        var producto = productosRepository.GetById(Id);
+
+        if (producto is null) return RedirectToAction(nameof(Index));
+
+        var viewModel = new AdminGuardarProductosViewModel()
+        {
+            Categorias = categoriasRepository.GetAll()
+                .OrderBy(c => c.Nombre)
+                .Select(c => new CategoriaModel
+                {
+                    Id = c.Id,
+                    Nombre = c.Nombre ?? "Sin nombre"
+                }),
+            Producto = producto
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public IActionResult Editar(AdminGuardarProductosViewModel viewModel)
+    {
+        if (viewModel.Archivo is not null)
+        {
+            if (viewModel.Archivo.ContentType != "image/jpeg")
+            {
+                ModelState.AddModelError(string.Empty, "Solo se aceptan imagenes jpg");
+            }
+
+            if (viewModel.Archivo.Length > 500 * 1024)
+            {
+                ModelState.AddModelError(string.Empty, "La imagen debe pesar menos de 500kb");
+            }
+        }
+
+        if (!ModelState.IsValid) return View(viewModel);
+
+        var producto = productosRepository.GetById(viewModel.Producto.Id);
+
+        if (producto is null) return RedirectToAction(nameof(Index));
+
+        producto.Nombre = viewModel.Producto.Nombre;
+        producto.Precio = viewModel.Producto.Precio;
+        producto.IdCategoria = viewModel.Producto.IdCategoria;
+        producto.UnidadMedida = viewModel.Producto.UnidadMedida;
+        producto.Descripcion = viewModel.Producto.Descripcion;
+
+        productosRepository.Update(producto);
+
+        if (viewModel.Archivo is null)
+        {
+            System.IO.File.Copy("wwwroot/img_frutas/0.jpg", $"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg");
+        }
+        else
+        {
+            var fs = new FileStream($"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg", FileMode.Create);
+            viewModel.Archivo.CopyTo(fs);
+            fs.Close();
         }
 
         return RedirectToAction(nameof(Index));

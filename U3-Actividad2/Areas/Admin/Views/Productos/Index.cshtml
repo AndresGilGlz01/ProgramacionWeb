@@ -19,8 +19,8 @@
         {
             <li>
                 @(Model.SelectedCategoriaId != 0 ? producto.Nombre : $"{producto.Nombre} - {producto.Categoria}")
-                <a href="~/Admin/Productos/Editar/@(producto.Nombre)" class="btnEditar"></a>
-                <a href="~/Admin/Productos/Eliminar/@(producto.Nombre)" class="btnBorrar"></a>
+                <a href="~/Admin/Productos/Editar/@(producto.Id)" class="btnEditar"></a>
+                <a href="~/Admin/Productos/Eliminar/@(producto.Id)" class="btnBorrar"></a>
             </li>
         }
     </ul>
