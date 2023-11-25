@@ -3,6 +3,7 @@ using U3_Actividad2.Models.ViewModels;
 using U3_Actividad2.Repositories;
 
 namespace FruitStore.Controllers;
+
 public class HomeController : Controller
 {
    ProductosRepository ProductosRepository;
@@ -56,5 +57,4 @@ public class HomeController : Controller
 
         return View();
     }
-
 }

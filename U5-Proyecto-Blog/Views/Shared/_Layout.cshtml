@@ -19,9 +19,9 @@
             <li><a asp-action="Index" asp-controller="Home">Inicio</a></li>
             <li><a asp-action="Index" asp-controller="Categorias">Categorias</a></li>
             <li>
-                <a asp-action="Login" asp-controller="Home">
+                <a href="#">
                     <i class="fa fa-user"></i>
-                    Iniciar Sesion
+                    @(User.Identity!.Name)
                 </a>
             </li>
         </ul>
@@ -71,7 +71,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    <script src="scripts.js"></script>
+    <script src="~/scripts.js"></script>
 
 </body>
 </html>

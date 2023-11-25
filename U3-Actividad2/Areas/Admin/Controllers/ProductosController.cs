@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using U3_Actividad2.Areas.Admin.Models.ViewModels;
 using U3_Actividad2.Models.Entities;
 using U3_Actividad2.Repositories;
@@ -53,7 +52,7 @@ public class ProductosController : Controller
                     Categoria = p.IdCategoriaNavigation?.Nombre ?? "Sin categoria"
                 });
         }
-        
+
         return View(viewModel);
     }
 
@@ -77,12 +76,12 @@ public class ProductosController : Controller
     {
         if (viewModel.Archivo is not null)
         {
-            if(viewModel.Archivo.ContentType != "image/jpeg")
+            if (viewModel.Archivo.ContentType != "image/jpeg")
             {
                 ModelState.AddModelError(string.Empty, "Solo se aceptan imagenes jpg");
             }
 
-            if(viewModel.Archivo.Length > 500 * 1024)
+            if (viewModel.Archivo.Length > 500 * 1024)
             {
                 ModelState.AddModelError(string.Empty, "La imagen debe pesar menos de 500kb");
             }
@@ -94,7 +93,7 @@ public class ProductosController : Controller
 
         if (viewModel.Archivo is null)
         {
-            System.IO.File.Copy("wwwroot/img_frutas/0.jpg", $"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg");   
+            System.IO.File.Copy("wwwroot/img_frutas/0.jpg", $"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg");
         }
         else
         {
@@ -163,11 +162,29 @@ public class ProductosController : Controller
         }
         else
         {
-            var fs = new FileStream($"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg", FileMode.Create);
+            var fs = System.IO.File.Create($"wwwroot/img_frutas/{viewModel.Producto.Id}.jpg");
             viewModel.Archivo.CopyTo(fs);
             fs.Close();
         }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Eliminar(int Id)
+    {
+        var producto = productosRepository.GetById(Id);
+
+        if (producto is null) return RedirectToAction(nameof(Index));
+
+        productosRepository.Delete(producto);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public IActionResult Eliminar(Productos producto)
+    {
+
+        return View();
     }
 }

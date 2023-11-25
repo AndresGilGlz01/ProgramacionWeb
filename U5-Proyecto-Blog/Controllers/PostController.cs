@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 using U5_Proyecto_Blog.Models.Entities;
 using U5_Proyecto_Blog.Models.ViewModels.Post;
 using U5_Proyecto_Blog.Repositories;
 
 namespace U5_Proyecto_Blog.Controllers;
 
+[Authorize]
 public class PostController : Controller
 {
     PostRepository _postRepository;
@@ -20,6 +23,7 @@ public class PostController : Controller
         _postCategoria = postCategoria;
     }
 
+    [Route("Home")]
     public IActionResult Index()
     {
         var viewModel = new IndexViewModel()
@@ -39,6 +43,41 @@ public class PostController : Controller
                 .OrderByDescending(p => p.FechaPublicacion)
                 .Take(5)
                 .Select(p => new UltimoPostModel
+                {
+                    Id = p.Id,
+                    Titulo = p.Titulo,
+                    Imagen = p.Titulo,
+                    Fecha = p.FechaPublicacion,
+                    Creador = p.IdCreadorNavigation.NombreUsuario
+                })
+        };
+
+        return View(viewModel);
+    }
+
+    public IActionResult Detalles(string Id)
+    {
+        Id = Id.Replace("-", " ");
+
+        var post = _postRepository.GetByTitulo(Id);
+
+        if (post is null) return RedirectToAction(nameof(Index));
+
+        var viewModel = new DetallesViewModel
+        {
+            Titulo = post.Titulo,
+            Contenido = post.Contenido,
+            Categorias = post.Postcategoria
+                .Select(pc => new CategoriaModel
+                {
+                    IdCategoria = pc.IdCategoria,
+                    Nombre = pc.IdCategoriaNavigation.Nombre
+                }),
+            Recomendados = _postRepository.GetAll()
+                .Where(p => p.Id != post.Id)
+                .OrderBy(p => Guid.NewGuid())
+                .Take(3)
+                .Select(p => new RecomendadoPostModel
                 {
                     Id = p.Id,
                     Titulo = p.Titulo,
@@ -77,7 +116,7 @@ public class PostController : Controller
         if (_postRepository.Exist(vm.Titulo)) ModelState.AddModelError(string.Empty, "Titulo de articulo no disponible");
 
         if (!ModelState.IsValid) return View(vm);
-        
+
         var entity = new Post
         {
             Titulo = vm.Titulo,
@@ -93,7 +132,7 @@ public class PostController : Controller
         };
 
         _postRepository.Insert(entity);
-            
+
         return RedirectToAction(nameof(Index));
     }
 

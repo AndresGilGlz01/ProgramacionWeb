@@ -1,4 +1,5 @@
 ﻿@model U3_Actividad2.Models.ViewModels.ProductosViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
 }
@@ -10,7 +11,7 @@
     {
         <a href="~/Home/Ver/@(producto.Nombre.Replace(" ", "-"))">
             <div>
-                <img src="~/img_frutas/@(producto.Id).jpg">
+                <img src="~/img_frutas/@(producto.Id).jpg" asp-append-version>
             </div>
             <h2>@producto.Nombre</h2>
             <h3>@producto.Precio.ToString("$0.00")</h3>

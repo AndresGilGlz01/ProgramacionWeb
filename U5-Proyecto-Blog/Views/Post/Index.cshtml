@@ -1,4 +1,5 @@
 ﻿@model U5_Proyecto_Blog.Models.ViewModels.Post.IndexViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,9 +15,9 @@
             @foreach (var post in Model.PostRecomendados)
             {
                 <div class="post">
-                    <img src="~/imagenes/fortnite.jpg" alt="" class="slider-img">
+                    <img src="~/imagenes/@(post.Id).jpg" alt="@post.Titulo" class="slider-img" asp-append-version>
                     <div class="post-info">
-                        <h4><a href="~/Post/@(post.Titulo.Replace(" ","-"))">@post.Titulo</a></h4>
+                        <h4><a href="~/post/@(post.Titulo.ToLower().Replace(" ","-"))">@post.Titulo</a></h4>
                         <i class="far fa-user">@post.Creador</i>
                         &nbsp;
                         <i class="far fa-calendar">@post.Fecha.ToShortDateString()</i>
@@ -31,9 +32,9 @@
             @foreach (var post in Model.UltimosPost)
             {
                 <div class="post">
-                    <img src="~/imagenes/spiderman2.jpg" alt="" class="post-img">
+                    <img src="~/imagenes/spiderman2.jpg" alt="" class="post-img" asp-append-version>
                     <div class="post-preview">
-                        <h2><a href="~/Post/@(post.Titulo.Replace(" ", "-"))">@post.Titulo</a></h2>
+                        <h2><a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">@post.Titulo</a></h2>
                         <i class="far fa-user">@post.Creador</i>
                         &nbsp;
                         <i class="far fa-calendar">@post.Fecha.ToShortDateString()</i>
