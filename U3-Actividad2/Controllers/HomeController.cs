@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+
+using System.Security.Claims;
+
+using U3_Actividad2.Helpers;
+using U3_Actividad2.Models.Entities;
 using U3_Actividad2.Models.ViewModels;
 using U3_Actividad2.Repositories;
 
@@ -6,10 +13,13 @@ namespace FruitStore.Controllers;
 
 public class HomeController : Controller
 {
-   ProductosRepository ProductosRepository;
+    ProductosRepository ProductosRepository;
+    Repository<Usuarios> UsuariosRepository;
 
-    public HomeController(ProductosRepository productosRepository)
+    public HomeController(ProductosRepository productosRepository,
+        Repository<Usuarios> usuariosRepository)
     {
+        UsuariosRepository = usuariosRepository;
         ProductosRepository = productosRepository;
     }
 
@@ -23,8 +33,37 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Login(LoginViewModel viewModel)
     {
+        if (string.IsNullOrEmpty(viewModel.Email)) ModelState.AddModelError(string.Empty, "El campo Email es obligatorio");
+        if (string.IsNullOrEmpty(viewModel.Contraseña)) ModelState.AddModelError(string.Empty, "El campo Contraseña es obligatorio");
 
-        return View();
+        if (!ModelState.IsValid) return View(viewModel);
+
+        var user = UsuariosRepository
+            .GetAll()
+            .FirstOrDefault(u => u.Correo == viewModel.Email && Encriptador.StringToSHA512(viewModel.Contraseña) == u.Contrasena);
+
+        if (user is null) ModelState.AddModelError(string.Empty, "Datos incorrectos");
+
+        if (!ModelState.IsValid) return View(viewModel);
+
+        var claims = new List<Claim>
+        {
+            new("Id", user!.Id.ToString()),
+            new(ClaimTypes.Name, user.Nombre),
+            new(ClaimTypes.Role, user.Rol == 1 ? "Administrador" : "Supervisor"),
+        };
+
+        var Identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
+
+        return RedirectToAction("Index", "Home", new { area = "Admin"});
+    }
+
+    public IActionResult Logout()
+    {
+        HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Index");
     }
 
     public IActionResult Productos(string Id)

@@ -1,3 +1,7 @@
 ﻿@{
     Layout = "_LayoutAdmin";
 }
+
+<h1>@(User.Identity?.Name)</h1>
+
+<a href="~/home/logout">Logout</a>

@@ -6,6 +6,7 @@ using U3_Actividad2.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();
 builder.Services.AddTransient<Repository<Categorias>>();
+builder.Services.AddTransient<Repository<Usuarios>>();
 builder.Services.AddTransient<ProductosRepository>();
 builder.Services.AddDbContext<fruteriashopContext>(opt =>
 {
