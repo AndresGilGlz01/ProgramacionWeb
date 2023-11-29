@@ -97,6 +97,7 @@ public class HomeController(
         return RedirectToAction(nameof(Menu));
     }
 
+    [HttpGet]
     [Route("admin/menu/editar/{Id}")]
     public IActionResult EditarMenu(string Id)
     {
@@ -108,7 +109,7 @@ public class HomeController(
 
         var viewModel = new EditarMenuViewModel
         {
-            Id = entity.Id,
+            IdMenu = entity.Id,
             Nombre = entity.Nombre,
             Descripcion = entity.Descripción,
             Precio = (decimal)entity.Precio,
@@ -125,6 +126,7 @@ public class HomeController(
         return View(viewModel);
     }
 
+    [HttpPost]
     [Route("admin/menu/editar")]
     public IActionResult EditarMenu(EditarMenuViewModel viewModel)
     {
@@ -138,7 +140,23 @@ public class HomeController(
 
         if (!ModelState.IsValid) return View(viewModel);
 
-        var entity = _menuRepository.Get(viewModel.Id);
+        var entity = _menuRepository.Get(viewModel!.IdMenu);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        entity.Nombre = viewModel.Nombre;
+        entity.Descripción = viewModel.Descripcion;
+        entity.Precio = (double)viewModel.Precio;
+        entity.IdClasificacion = viewModel.IdClasificacion;
+
+        _menuRepository.Update(entity);
+
+        if (viewModel.Archivo is not null)
+        {
+            var fs = System.IO.File.Create($"wwwroot/hamburguesas/{viewModel.IdMenu}.png");
+            viewModel.Archivo.CopyTo(fs);
+            fs.Close();
+        }
 
         return RedirectToAction(nameof(Menu));
     }

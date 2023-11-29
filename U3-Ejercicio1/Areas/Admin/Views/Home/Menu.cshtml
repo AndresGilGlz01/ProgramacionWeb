@@ -11,7 +11,7 @@
         @foreach (var menu in clasificacion.Menus)
         {
             <div>
-                <img src="~/hamburguesas/@(menu.Id).png" />
+                <img src="~/hamburguesas/@(menu.Id).png" asp-append-version/>
                 <h1>@menu.Nombre.ToUpper()</h1>
                 @if (menu.PrecioNuevo is not null)
                 {

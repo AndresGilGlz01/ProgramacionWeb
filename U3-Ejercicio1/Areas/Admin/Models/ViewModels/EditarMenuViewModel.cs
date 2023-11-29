@@ -2,7 +2,7 @@
 
 public class EditarMenuViewModel
 {
-    public int Id { get; set; }
+    public int IdMenu { get; set; }
     public string Nombre { get; set; } = null!;
     public decimal Precio { get; set; }
     public string Descripcion { get; set; } = null!;
