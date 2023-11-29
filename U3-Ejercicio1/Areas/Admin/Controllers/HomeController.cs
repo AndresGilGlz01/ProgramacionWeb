@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using U3_Ejercicio1.Areas.Admin.Models;
 using U3_Ejercicio1.Areas.Admin.Models.ViewModels;
 using U3_Ejercicio1.Models.Entities;
 using U3_Ejercicio1.Repositories;
@@ -97,7 +97,6 @@ public class HomeController(
         return RedirectToAction(nameof(Menu));
     }
 
-    [HttpGet]
     [Route("admin/menu/editar/{Id}")]
     public IActionResult EditarMenu(string Id)
     {
@@ -157,6 +156,113 @@ public class HomeController(
             viewModel.Archivo.CopyTo(fs);
             fs.Close();
         }
+
+        return RedirectToAction(nameof(Menu));
+    }
+
+    [Route("admin/menu/eliminar/{Id}")]
+    public IActionResult EliminarMenu(string Id)
+    {
+        Id = Id.Replace("-", " ");
+
+        var entity = _menuRepository.GetByName(Id);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        var viewModel = new EliminarMenuViewModel()
+        {
+            IdMenu = entity.Id,
+            Nombre = entity.Nombre
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    [Route("admin/menu/eliminar")]
+    public IActionResult EliminarMenu(EliminarMenuViewModel viewModel)
+    {
+        var entity = _menuRepository.Get(viewModel.IdMenu);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        _menuRepository.Delete(entity);
+
+        return RedirectToAction(nameof(Menu));
+    }
+
+    [Route("admin/promocion/quitar/{Id}")]
+    public IActionResult QuitarPromocion(string Id)
+    {
+        Id = Id.Replace("-", " ");
+
+        var entity = _menuRepository.GetByName(Id);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        var viewModel = new QuitarPromocionViewModel()
+        {
+            IdMenu = entity.Id,
+            Nombre = entity.Nombre,
+            PrecioOriginal = (decimal)entity.Precio,
+            PrecioNuevo = (decimal)entity.PrecioPromocion!
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    [Route("admin/promocion/quitar")]
+    public IActionResult QuitarPromocion(QuitarPromocionViewModel viewModel)
+    {
+        var entity = _menuRepository.Get(viewModel.IdMenu);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        entity.PrecioPromocion = null;
+
+        _menuRepository.Update(entity);
+
+        return RedirectToAction(nameof(Menu));
+    }
+
+    [Route("admin/promocion/agregar/{Id}")]
+    public IActionResult AgregarPromocion(string Id)
+    {
+        Id = Id.Replace("-", " ");
+
+        var entity = _menuRepository.GetByName(Id);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        var viewModel = new AgregarPromocionViewModel()
+        {
+            IdMenu = entity.Id,
+            Nombre = entity.Nombre,
+            PrecioOriginal = (decimal)entity.Precio,
+            PrecioNuevo = (decimal)entity.Precio
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    [Route("admin/promocion/agregar")]
+    public IActionResult AgregarPromocion(AgregarPromocionViewModel viewModel)
+    {
+        if (viewModel.PrecioNuevo == 0) ModelState.AddModelError(string.Empty, "El precio no puede ser $0");
+
+        if (viewModel.PrecioNuevo >= viewModel.PrecioOriginal) ModelState.AddModelError(string.Empty, "El precio promocional debe ser menor al precio original");
+
+        if (!ModelState.IsValid) return View(viewModel);
+
+        var entity = _menuRepository.Get(viewModel.IdMenu);
+
+        if (entity is null) return RedirectToAction(nameof(Menu));
+
+        entity.PrecioPromocion = (double)viewModel.PrecioNuevo;
+
+        _menuRepository.Update(entity);
 
         return RedirectToAction(nameof(Menu));
     }

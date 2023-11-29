@@ -30,7 +30,11 @@
                     <a href="~/admin/menu/eliminar/@(menu.Nombre.ToLower().Replace(" ", "-"))">Eliminar</a>
                     @if(menu.PrecioNuevo is not null)
                     {
-                        <a href="~/admin/quitarpromocion/@(menu.Nombre.ToLower().Replace(" ", "-"))">Quitar promoción</a>
+                        <a href="~/admin/promocion/quitar/@(menu.Nombre.ToLower().Replace(" ", "-"))">Quitar promoción</a>
+                    }
+                    else
+                    {
+                        <a href="~/admin/promocion/agregar/@(menu.Nombre.ToLower().Replace(" ", "-"))">Agregar promoción</a>
                     }
                 </span>
             </div>

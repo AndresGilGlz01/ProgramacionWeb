@@ -1,4 +1,4 @@
-﻿namespace U3_Ejercicio1.Areas.Admin.Models.ViewModels;
+﻿namespace U3_Ejercicio1.Areas.Admin.Models;
 
 public class ClasificacionModel
 {
