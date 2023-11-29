@@ -1,0 +1,19 @@
+﻿<html>
+<head>
+    <link lang="es-mx" />
+    <link href="~/estilos.css" rel="stylesheet" />
+    <title>Neat Burguer</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a asp-controller="home" asp-action="index">Principal</a>
+            <a asp-controller="home" asp-action="promociones">Promociones</a>
+            <a asp-controller="home" asp-action="menu">Menú</a>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>

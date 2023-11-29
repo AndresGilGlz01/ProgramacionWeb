@@ -18,6 +18,15 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Login() => View();
+
+    [HttpPost]
+    public IActionResult Login(LoginViewModel viewModel)
+    {
+
+        return View();
+    }
+
     public IActionResult Productos(string Id)
     {
         Id = Id.Replace("-", "");

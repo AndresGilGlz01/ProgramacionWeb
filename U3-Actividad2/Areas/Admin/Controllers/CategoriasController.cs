@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using U3_Actividad2.Areas.Admin.Models.ViewModels;
 using U3_Actividad2.Models.Entities;
 using U3_Actividad2.Repositories;
 
 namespace U3_Actividad2.Areas.Admin.Controllers;
 
+[Authorize(Roles = "Administrador")]
 [Area("Admin")]
 public class CategoriasController : Controller
 {
