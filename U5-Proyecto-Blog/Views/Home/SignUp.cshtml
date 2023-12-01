@@ -1,0 +1,53 @@
+﻿@model U5_Proyecto_Blog.Models.ViewModels.Home.SignupViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+    <title>Registrarse</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1 class="logotxt"><span>Game</span>Tec</h1>
+        </div>
+    </header>
+
+    <div class="auth-content">
+        <form action="~/signup" method="post">
+            <h2 class="form-title">Registro</h2>
+
+            <div class="msg">
+            </div>
+
+            <div>
+                <label>Usuario</label>
+                <input asp-for="NombreUsuario" type="text" class="text-input">
+            </div>
+            <div>
+                <label>Email</label>
+                <input asp-for="Email" type="email" class="text-input">
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input asp-for="Contraseña" class="text-input">
+            </div>
+            <div>
+                <label>Confirmar contraseña</label>
+                <input asp-for="ConfirmarContraseña" type="password" class="text-input">
+            </div>
+            <div>
+                <button type="submit" name="register-btn" class="btn btn-big">Registrarme</button>
+            </div>
+            <p>¿Ya tienes una cuenta? <a href="~/login">Inicia Sesion</a></p>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/scripts.js"></script>
+</body>
+</html>

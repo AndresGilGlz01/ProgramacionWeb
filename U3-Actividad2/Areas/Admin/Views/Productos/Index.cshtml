@@ -14,13 +14,23 @@
         </select>
     </form>
     <ul>
-        <li><a href="~/Admin/Productos/Agregar"><img src="~/images/add.png" />Nuevo producto</a></li>
+        <li>
+            @if (User.IsInRole("Administrador"))
+            {
+                <a href="~/Admin/Productos/Agregar"><img src="~/images/add.png" />Nuevo producto</a>
+            }
+        </li>
         @foreach (var producto in Model.Productos)
         {
             <li>
                 @(Model.SelectedCategoriaId != 0 ? producto.Nombre : $"{producto.Nombre} - {producto.Categoria}")
+                
                 <a href="~/Admin/Productos/Editar/@(producto.Id)" class="btnEditar"></a>
-                <a href="~/Admin/Productos/Eliminar/@(producto.Id)" class="btnBorrar"></a>
+                
+                @if (User.IsInRole("Administrador"))
+                {
+                    <a href="~/Admin/Productos/Eliminar/@(producto.Id)" class="btnBorrar"></a>
+                }
             </li>
         }
     </ul>

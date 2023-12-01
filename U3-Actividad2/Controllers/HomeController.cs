@@ -30,6 +30,8 @@ public class HomeController : Controller
 
     public IActionResult Login() => View();
 
+    public IActionResult Denied() => View();
+
     [HttpPost]
     public IActionResult Login(LoginViewModel viewModel)
     {

@@ -49,12 +49,18 @@ public class PostController : Controller
                     Imagen = p.Titulo,
                     Fecha = p.FechaPublicacion,
                     Creador = p.IdCreadorNavigation.NombreUsuario
+                }),
+            Categorias = _categoriaRepository.GetAll()
+                .Select(c => new CategoriaModel
+                {
+                    Nombre = c.Nombre
                 })
         };
 
         return View(viewModel);
     }
 
+    [Route("post/{Id}")]
     public IActionResult Detalles(string Id)
     {
         Id = Id.Replace("-", " ");
@@ -72,18 +78,6 @@ public class PostController : Controller
                 {
                     IdCategoria = pc.IdCategoria,
                     Nombre = pc.IdCategoriaNavigation.Nombre
-                }),
-            Recomendados = _postRepository.GetAll()
-                .Where(p => p.Id != post.Id)
-                .OrderBy(p => Guid.NewGuid())
-                .Take(3)
-                .Select(p => new RecomendadoPostModel
-                {
-                    Id = p.Id,
-                    Titulo = p.Titulo,
-                    Imagen = p.Titulo,
-                    Fecha = p.FechaPublicacion,
-                    Creador = p.IdCreadorNavigation.NombreUsuario
                 })
         };
 
@@ -107,24 +101,32 @@ public class PostController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(GuardarPostViewModel vm)
+    public IActionResult Create(GuardarPostViewModel viewModel)
     {
-        if (string.IsNullOrEmpty(vm.Titulo)) ModelState.AddModelError(string.Empty, "El título es requerido");
+        if (viewModel.Archivo is not null)
+        {
+            if (viewModel.Archivo.ContentType != "image/png")
+            {
+                ModelState.AddModelError(string.Empty, "Solo se aceptan imagenes jpg");
+            }
+        }
 
-        if (string.IsNullOrEmpty(vm.Contenido)) ModelState.AddModelError(string.Empty, "El contenido es requerido");
+        if (string.IsNullOrEmpty(viewModel.Titulo)) ModelState.AddModelError(string.Empty, "El título es requerido");
 
-        if (_postRepository.Exist(vm.Titulo)) ModelState.AddModelError(string.Empty, "Titulo de articulo no disponible");
+        if (string.IsNullOrEmpty(viewModel.Contenido)) ModelState.AddModelError(string.Empty, "El contenido es requerido");
 
-        if (!ModelState.IsValid) return View(vm);
+        if (_postRepository.Exist(viewModel.Titulo)) ModelState.AddModelError(string.Empty, "Titulo de articulo no disponible");
+
+        if (!ModelState.IsValid) return View(viewModel);
 
         var entity = new Post
         {
-            Titulo = vm.Titulo,
-            Contenido = vm.Contenido,
+            Titulo = viewModel.Titulo,
+            Contenido = viewModel.Contenido,
             IdCreador = 1,
             FechaPublicacion = DateTime.Now,
             FechaActualizacion = DateTime.Now,
-            Postcategoria = vm.Categorias.Where(c => c.Seleccionada)
+            Postcategoria = viewModel.Categorias.Where(c => c.Seleccionada)
                 .Select(c => new Postcategoria
                 {
                     IdCategoria = c.IdCategoria
@@ -132,6 +134,17 @@ public class PostController : Controller
         };
 
         _postRepository.Insert(entity);
+
+        if (viewModel.Archivo is null)
+        {
+            System.IO.File.Copy("wwwroot/imagenes/no-disponible.png", $"wwwroot/imagenes/{entity.Id}.png");
+        }
+        else
+        {
+            var fs = new FileStream($"wwwroot/imagenes/{entity.Id}.png", FileMode.Create);
+            viewModel.Archivo.CopyTo(fs);
+            fs.Close();
+        }
 
         return RedirectToAction(nameof(Index));
     }

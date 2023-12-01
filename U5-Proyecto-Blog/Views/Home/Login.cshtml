@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model U5_Proyecto_Blog.Models.UserLogin
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -22,16 +24,16 @@
             <h2 class="form-title">Iniciar Sesion</h2>
             <div>
                 <label>Usuario</label>
-                <input type="text" name="Usuario" class="text-input">
+                <input asp-for="Usuario" type="text" class="text-input">
             </div>
             <div>
                 <label>Contraseña</label>
-                <input type="password" name="Contraseña" class="text-input">
+                <input asp-for="Contraseña" type="password" class="text-input">
             </div>
             <div>
                 <button type="submit" name="login-btn" class="btn btn-big">Iniciar Sesion</button>
             </div>
-            <p>¿No estas registrado? <a href="~/SignUp">Registrarte</a></p>
+            <p>¿No estas registrado? <a href="~/signup">Registrarte</a></p>
         </form>
         
         @Html.ValidationSummary(true)

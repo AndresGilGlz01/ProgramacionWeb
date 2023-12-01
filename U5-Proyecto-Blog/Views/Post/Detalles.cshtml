@@ -14,18 +14,8 @@
             </div>
         </div>
         <div class="sidebar single">
-            <div class="section postrandom">
-                <h2 class="section-title">Tambien te podria interesar</h2>
-                @foreach(var recomendado in Model.Recomendados)
-                {
-                    <div class="post clearfix">
-                        <img src="~/imagenes/@(recomendado.Id).jpg" alt="@(recomendado.Titulo)" asp-append-version>
-                        <a href="~/post/@recomendado.Titulo.ToLower().Replace(" ", "-")" class="title"><h4>@recomendado.Titulo</h4></a>
-                    </div>                    
-                }
-            </div>
             <div class="section topics">
-                <h2 class="section-title">Categorias</h2>
+                <h2 class="section-title">Categorias del Post</h2>
                 <ul>
                     @foreach(var categoria in Model.Categorias)
                     {

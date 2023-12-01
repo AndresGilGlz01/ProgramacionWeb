@@ -5,6 +5,7 @@ using U5_Proyecto_Blog.Repositories;
 using U5_Proyecto_Blog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddMvc();
 builder.Services.AddDbContext<BlogsContext>();
 builder.Services.AddTransient<UsuarioRepository>();
@@ -22,6 +23,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 
 var app = builder.Build();
+
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();

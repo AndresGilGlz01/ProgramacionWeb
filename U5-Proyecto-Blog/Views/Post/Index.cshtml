@@ -15,12 +15,12 @@
             @foreach (var post in Model.PostRecomendados)
             {
                 <div class="post">
-                    <img src="~/imagenes/@(post.Id).jpg" alt="@post.Titulo" class="slider-img" asp-append-version>
+                    <img src="~/imagenes/@(post.Id).png" alt="@post.Titulo" class="slider-img" asp-append-version>
                     <div class="post-info">
                         <h4><a href="~/post/@(post.Titulo.ToLower().Replace(" ","-"))">@post.Titulo</a></h4>
-                        <i class="far fa-user">@post.Creador</i>
+                        <i class="far fa-user"> @post.Creador</i>
                         &nbsp;
-                        <i class="far fa-calendar">@post.Fecha.ToShortDateString()</i>
+                        <i class="far fa-calendar"> @post.Fecha.ToShortDateString()</i>
                     </div>
                 </div>           
             }
@@ -32,14 +32,14 @@
             @foreach (var post in Model.UltimosPost)
             {
                 <div class="post">
-                    <img src="~/imagenes/spiderman2.jpg" alt="" class="post-img" asp-append-version>
+                    <img src="~/imagenes/@(post.Id).png" alt="" class="post-img" asp-append-version>
                     <div class="post-preview">
                         <h2><a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">@post.Titulo</a></h2>
-                        <i class="far fa-user">@post.Creador</i>
+                        <i class="far fa-user"> @post.Creador</i>
                         &nbsp;
-                        <i class="far fa-calendar">@post.Fecha.ToShortDateString()</i>
+                        <i class="far fa-calendar"> @post.Fecha.ToShortDateString()</i>
                         <p class="prev-text">@post.Descripcion</p>
-                        <a href="~/Post/@(post.Titulo.Replace(" ", "-"))" class="btn read">Leer Mas</a>
+                        <a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))" class="btn read">Leer Mas</a>
                     </div>
                 </div>                
             }
@@ -55,11 +55,10 @@
             <div class="section topics">
                 <h2 class="section-title">Categorias</h2>
                 <ul>
-                    <li><a href="#">Noticias</a></li>
-                    <li><a href="#">Juegos</a></li>
-                    <li><a href="#">Consola</a></li>
-                    <li><a href="#">Dispositivo movil</a></li>
-                    <li><a href="#">PC</a></li>
+                    @foreach (var categoria in Model.Categorias)
+                    {
+                        <li><a href="~/categoria/@(categoria.Nombre.ToLower().Replace(" ", "-"))">@categoria.Nombre</a></li>
+                    }
                 </ul>
             </div>
         </div>

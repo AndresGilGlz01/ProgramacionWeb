@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using U3_Actividad2.Areas.Admin.Models.ViewModels;
 using U3_Actividad2.Models.Entities;
 using U3_Actividad2.Repositories;
 
 namespace U3_Actividad2.Areas.Admin.Controllers;
 
-[Authorize(Roles = "Administrador, Supervisor")]
+[Authorize]
 [Area("Admin")]
 public class ProductosController : Controller
 {
@@ -22,6 +23,7 @@ public class ProductosController : Controller
     }
 
     [HttpGet, HttpPost]
+    [Authorize(Roles = "Administrador, Supervisor")]
     public IActionResult Index(AdminProductosViewModel viewModel)
     {
         viewModel.Categorias = categoriasRepository.GetAll()
@@ -58,6 +60,7 @@ public class ProductosController : Controller
         return View(viewModel);
     }
 
+    [Authorize(Roles = "Administrador")]
     public IActionResult Agregar()
     {
         var viewModel = new AdminGuardarProductosViewModel()
@@ -74,6 +77,7 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador, Supervisor")]
     public IActionResult Agregar(AdminGuardarProductosViewModel viewModel)
     {
         if (viewModel.Archivo is not null)
@@ -107,6 +111,7 @@ public class ProductosController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Administrador, Supervisor")]
     public IActionResult Editar(int Id)
     {
         var producto = productosRepository.GetById(Id);
@@ -172,6 +177,7 @@ public class ProductosController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Administrador")]
     public IActionResult Eliminar(int Id)
     {
         var producto = productosRepository.GetById(Id);
@@ -184,6 +190,7 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public IActionResult Eliminar(Productos producto)
     {
 

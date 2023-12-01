@@ -2,8 +2,9 @@
 
 public class IndexViewModel
 {
-    public IEnumerable<RecomendadoPostModel> PostRecomendados = Enumerable.Empty<RecomendadoPostModel>();
-    public IEnumerable<UltimoPostModel> UltimosPost = Enumerable.Empty<UltimoPostModel>();
+    public IEnumerable<RecomendadoPostModel> PostRecomendados { get; set; } = Enumerable.Empty<RecomendadoPostModel>();
+    public IEnumerable<UltimoPostModel> UltimosPost { get; set; } = Enumerable.Empty<UltimoPostModel>();
+    public IEnumerable<CategoriaModel> Categorias { get; set; } = Enumerable.Empty<CategoriaModel>();
 }
 
 public class RecomendadoPostModel

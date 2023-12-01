@@ -2,6 +2,7 @@
 
 <html>
 <head>
+    <meta lang="es" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>FruitStore - La mejor fruteria de la Web</title>
     <link href="~/styles.css" rel="stylesheet" />
@@ -10,7 +11,12 @@
     <header></header>
     <nav>
         <a href="~/Admin">Principal</a>
-        <a href="~/Admin/Categorias">Administrar Categorias</a>
+
+        @if (User.IsInRole("Administrador"))
+        {
+            <a href="~/Admin/Categorias">Administrar Categorias</a>
+        }
+            
         <a href="~/Admin/Productos">Administrar Productos</a>
     </nav>
     <main>

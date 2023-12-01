@@ -6,6 +6,7 @@ public class GuardarPostViewModel
     public string Titulo { get; set; } = null!;
     public CategoriaModel[] Categorias { get; set; } = null!;
     public string Contenido { get; set; } = null!;
+    public IFormFile? Archivo { get; set; }
 }
 
 public class CategoriaModel
