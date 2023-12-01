@@ -5,7 +5,7 @@ namespace U5_Proyecto_Blog.Repositories;
 
 public class PostRepository : Repository<Post>
 {
-    public PostRepository(BlogsContext context) : base(context) { }
+    public PostRepository(BlogContext context) : base(context) { }
 
     public override IEnumerable<Post> GetAll() => Context.Post.Include(p => p.IdCreadorNavigation);
 

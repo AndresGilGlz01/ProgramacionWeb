@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using System.Security.Claims;
+
 using U5_Proyecto_Blog.Models.Entities;
 using U5_Proyecto_Blog.Models.ViewModels.Post;
 using U5_Proyecto_Blog.Repositories;
@@ -23,7 +25,7 @@ public class PostController : Controller
         _postCategoria = postCategoria;
     }
 
-    [Route("Home")]
+    [Route("home")]
     public IActionResult Index()
     {
         var viewModel = new IndexViewModel()
@@ -60,12 +62,12 @@ public class PostController : Controller
         return View(viewModel);
     }
 
-    [Route("post/{Id}")]
-    public IActionResult Detalles(string Id)
+    [Route("post/{id}")]
+    public IActionResult Detalles(string id)
     {
-        Id = Id.Replace("-", " ");
+        id = id.Replace("-", " ");
 
-        var post = _postRepository.GetByTitulo(Id);
+        var post = _postRepository.GetByTitulo(id);
 
         if (post is null) return RedirectToAction(nameof(Index));
 
@@ -84,6 +86,7 @@ public class PostController : Controller
         return View(viewModel);
     }
 
+    [Route("crear/post")]
     public IActionResult Create()
     {
         var viewModel = new GuardarPostViewModel()
@@ -101,6 +104,7 @@ public class PostController : Controller
     }
 
     [HttpPost]
+    [Route("crear/post")]
     public IActionResult Create(GuardarPostViewModel viewModel)
     {
         if (viewModel.Archivo is not null)
@@ -123,7 +127,7 @@ public class PostController : Controller
         {
             Titulo = viewModel.Titulo,
             Contenido = viewModel.Contenido,
-            IdCreador = 1,
+            IdCreador = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value),
             FechaPublicacion = DateTime.Now,
             FechaActualizacion = DateTime.Now,
             Postcategoria = viewModel.Categorias.Where(c => c.Seleccionada)
@@ -149,13 +153,19 @@ public class PostController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Edit(string Id)
+    [Route("editar/post/{id}")]
+    public IActionResult Edit(string id)
     {
-        Id = Id.Replace("-", " ");
 
-        var post = _postRepository.GetByTitulo(Id);
+        id = id.Replace("-", " ");
+
+        var post = _postRepository.GetByTitulo(id);
 
         if (post is null) return RedirectToAction(nameof(Index));
+
+        var IdUsuario = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        
+        if (post.IdCreador != IdUsuario) return RedirectToAction(nameof(Index));
 
         var viewModel = new GuardarPostViewModel
         {
@@ -175,11 +185,16 @@ public class PostController : Controller
     }
 
     [HttpPost]
+    [Route("editar/post")]
     public IActionResult Edit(GuardarPostViewModel viewModel)
     {
         var entity = _postRepository.GetById(viewModel.IdPost);
 
         if (entity is null) return RedirectToAction(nameof(Index));
+
+        var IdUsuario = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        if (entity.IdCreador != IdUsuario) return RedirectToAction(nameof(Index));
 
         entity.Titulo = viewModel.Titulo;
         entity.Contenido = viewModel.Contenido;
@@ -212,14 +227,17 @@ public class PostController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Route("eliminar/post/{id}")]
     public IActionResult Delete(int id)
     {
         return View();
     }
 
     [HttpPost]
+    [Route("eliminar/post")]
     public IActionResult Delete(Post post)
     {
+        // eliminar imagen del post
         return View();
     }
 }

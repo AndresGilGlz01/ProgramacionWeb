@@ -4,9 +4,9 @@ namespace U5_Proyecto_Blog.Repositories;
 
 public class Repository<T> where T : class
 {
-    public BlogsContext Context { get; set; }
+    public BlogContext Context { get; set; }
 
-    public Repository(BlogsContext context)
+    public Repository(BlogContext context)
     {
         Context = context;
     }

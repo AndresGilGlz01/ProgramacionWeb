@@ -8,7 +8,7 @@ namespace U5_Proyecto_Blog.Repositories;
 
 public class UsuarioRepository : Repository<Usuario>
 {
-    public UsuarioRepository(BlogsContext context) : base(context) { }
+    public UsuarioRepository(BlogContext context) : base(context) { }
 
     public Usuario? Login(UserLogin userLogin) => Context.Usuario
         .Include(u => u.IdRolNavigation)

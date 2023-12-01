@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 using U5_Proyecto_Blog.Helpers;
 using U5_Proyecto_Blog.Models;
@@ -41,36 +42,37 @@ public class HomeController : Controller
     [HttpPost]
     [Route("login")]
     public IActionResult Login(UserLogin userLogin)
-    {
-        if (string.IsNullOrEmpty(userLogin.Contraseña))
-            ModelState.AddModelError(string.Empty, "La contraseña es requerida.");
-
-        if (string.IsNullOrEmpty(userLogin.Usuario))
-            ModelState.AddModelError(string.Empty, "El nombre de usuario es requerdio.");
-
-        if (!ModelState.IsValid)
-            return View(userLogin);
-
-        var usuarioActual = _usuarioRepository.Login(userLogin);
-
-        if (usuarioActual is null)
-            ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectas.");
-
-        if (!ModelState.IsValid)
-            return View(userLogin);
-
-        var claims = new List<Claim>
         {
-            new(ClaimTypes.Name, usuarioActual!.NombreUsuario),
-            new(ClaimTypes.Role, usuarioActual.IdRolNavigation!.Nombre),
-        };
+            if (string.IsNullOrEmpty(userLogin.Contraseña))
+                ModelState.AddModelError(string.Empty, "La contraseña es requerida.");
 
-        var Identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            if (string.IsNullOrEmpty(userLogin.Usuario))
+                ModelState.AddModelError(string.Empty, "El nombre de usuario es requerdio.");
 
-        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
+            if (!ModelState.IsValid)
+                return View(userLogin);
 
-        return RedirectToAction(nameof(Index));
-    }
+            var usuarioActual = _usuarioRepository.Login(userLogin);
+
+            if (usuarioActual is null)
+                ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectas.");
+
+            if (!ModelState.IsValid)
+                return View(userLogin);
+
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, usuarioActual!.Id.ToString()),
+                new(ClaimTypes.Name, usuarioActual!.NombreUsuario),
+                new(ClaimTypes.Role, usuarioActual.IdRolNavigation is not null ? usuarioActual.IdRolNavigation.Nombre : "Normal")
+            };
+
+            var Identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
+
+            return RedirectToAction(nameof(Index));
+        }
 
     [Route("signup")]
     public IActionResult SignUp() => View();
@@ -80,10 +82,22 @@ public class HomeController : Controller
     public IActionResult SignUp(SignupViewModel viewModel)
     {
         if (string.IsNullOrEmpty(viewModel.Contraseña))
-            ModelState.AddModelError(string.Empty, "La contraseña es requerida.");
+            ModelState.AddModelError(string.Empty, "La contraseña es requerida");
+
+        if (string.IsNullOrEmpty(viewModel.ConfirmarContraseña))
+            ModelState.AddModelError(string.Empty, "La confirmación de contraseña es requerida");
+
+        if (viewModel.Contraseña != viewModel.ConfirmarContraseña)
+            ModelState.AddModelError(string.Empty, "Las contraseñas no coinciden");
 
         if (string.IsNullOrEmpty(viewModel.NombreUsuario))
-            ModelState.AddModelError(string.Empty, "El nombre de usuario es requerdio.");
+            ModelState.AddModelError(string.Empty, "El nombre de usuario es requerido");
+        
+        if (string.IsNullOrEmpty(viewModel.Email))
+            ModelState.AddModelError(string.Empty, "El email es requerido");
+
+        if (!IsValidEmail(viewModel.Email ?? string.Empty))
+            ModelState.AddModelError(string.Empty, "El email no es válido");
 
         if (!ModelState.IsValid)
             return View(viewModel);
@@ -100,11 +114,9 @@ public class HomeController : Controller
 
         _usuarioRepository.Insert(entity);
 
-        if (!ModelState.IsValid)
-            return View(viewModel);
-
         var claims = new List<Claim>
         {
+            new(ClaimTypes.NameIdentifier, entity!.Id.ToString()),
             new(ClaimTypes.Name, entity!.NombreUsuario),
             new(ClaimTypes.Role, entity.IdRolNavigation is not null ? entity.IdRolNavigation.Nombre : "Normal"),
         };
@@ -116,17 +128,24 @@ public class HomeController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [Route("Logout")]
+    [Route("logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    [Route("ConfirmarEmail/{Id}")]
-    public IActionResult ConfirmarEmail(int Id)
+    [Route("confirmar/{id}")]
+    public IActionResult ConfirmarEmail(int id)
     {
         // Confirmar el email del usuario
         return RedirectToAction("Login");
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+        Regex regex = new Regex(pattern);
+        return regex.IsMatch(email);
     }
 }

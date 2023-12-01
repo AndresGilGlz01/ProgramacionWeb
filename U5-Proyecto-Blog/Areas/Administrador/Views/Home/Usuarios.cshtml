@@ -1,0 +1,38 @@
+﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.UsuariosViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+}
+
+<div class="admin-wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="~/administrar/post">Administrar Post</a></li>
+            <li><a href="~/administrar/usuarios">Administrar Usuarios</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="content">
+
+            <h2 class="page-title">Administrar posts</h2>
+
+            <table>
+                <thead>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </thead>
+                <tbody>
+                    @foreach(var usuario in Model.Usuarios)
+                    {
+                        <tr>
+                            <td>@usuario.Nombre</td>
+                            <td>@usuario.Email</td>
+                            <td><a href="~/administrar/usuarios/editar/@(usuario.Id)" class="edit">Editar</a></td>
+                            <td><a href="~/administrar/usuarios/eliminar/@(usuario.Id)" class="delete">Borrar</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

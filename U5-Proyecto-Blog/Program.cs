@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 using U5_Proyecto_Blog.Models.Entities;
 using U5_Proyecto_Blog.Repositories;
@@ -7,7 +8,11 @@ using U5_Proyecto_Blog.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc();
-builder.Services.AddDbContext<BlogsContext>();
+builder.Services.AddDbContext<BlogContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Default");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 builder.Services.AddTransient<UsuarioRepository>();
 builder.Services.AddTransient<PostRepository>();
 builder.Services.AddTransient<CategoriaRepository>();

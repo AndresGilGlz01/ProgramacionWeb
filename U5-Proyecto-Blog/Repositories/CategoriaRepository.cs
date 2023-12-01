@@ -4,5 +4,5 @@ namespace U5_Proyecto_Blog.Repositories;
 
 public class CategoriaRepository : Repository<Categoria>
 {
-    public CategoriaRepository(BlogsContext context) : base(context) { }
+    public CategoriaRepository(BlogContext context) : base(context) { }
 }

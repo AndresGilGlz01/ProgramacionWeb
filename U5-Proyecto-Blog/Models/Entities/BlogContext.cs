@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace U5_Proyecto_Blog.Models.Entities;
 
-public partial class BlogsContext : DbContext
+public partial class BlogContext : DbContext
 {
-    public BlogsContext()
+    public BlogContext()
     {
     }
 
-    public BlogsContext(DbContextOptions<BlogsContext> options)
+    public BlogContext(DbContextOptions<BlogContext> options)
         : base(options)
     {
     }
@@ -33,14 +31,11 @@ public partial class BlogsContext : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("server=localhost;user=root;password=root;database=Blogs", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.34-mysql"));
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .UseCollation("utf8mb4_0900_ai_ci")
-            .HasCharSet("utf8mb4");
+            .UseCollation("utf8mb3_general_ci")
+            .HasCharSet("utf8mb3");
 
         modelBuilder.Entity<Actividad>(entity =>
         {
@@ -52,7 +47,10 @@ public partial class BlogsContext : DbContext
 
             entity.HasIndex(e => e.IdTipo, "fkActividad_TipoActividad");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Fecha).HasColumnType("datetime");
+            entity.Property(e => e.IdPost).HasColumnType("int(11)");
+            entity.Property(e => e.IdTipo).HasColumnType("int(11)");
 
             entity.HasOne(d => d.IdPostNavigation).WithMany(p => p.Actividad)
                 .HasForeignKey(d => d.IdPost)
@@ -71,6 +69,7 @@ public partial class BlogsContext : DbContext
 
             entity.ToTable("categoria");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Descripcion).HasMaxLength(255);
             entity.Property(e => e.Nombre).HasMaxLength(255);
         });
@@ -84,6 +83,10 @@ public partial class BlogsContext : DbContext
             entity.HasIndex(e => e.IdSeguido, "fkUsuarioUsuario_Usuario1");
 
             entity.HasIndex(e => e.IdSeguidor, "fkUsuarioUsuario_Usuario2");
+
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+            entity.Property(e => e.IdSeguido).HasColumnType("int(11)");
+            entity.Property(e => e.IdSeguidor).HasColumnType("int(11)");
 
             entity.HasOne(d => d.IdSeguidoNavigation).WithMany(p => p.FollowIdSeguidoNavigation)
                 .HasForeignKey(d => d.IdSeguido)
@@ -104,9 +107,11 @@ public partial class BlogsContext : DbContext
 
             entity.HasIndex(e => e.IdCreador, "fkPost_Usuario");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Contenido).HasColumnType("text");
             entity.Property(e => e.FechaActualizacion).HasColumnType("datetime");
             entity.Property(e => e.FechaPublicacion).HasColumnType("datetime");
+            entity.Property(e => e.IdCreador).HasColumnType("int(11)");
             entity.Property(e => e.Titulo).HasMaxLength(255);
 
             entity.HasOne(d => d.IdCreadorNavigation).WithMany(p => p.Post)
@@ -125,14 +130,16 @@ public partial class BlogsContext : DbContext
 
             entity.HasIndex(e => e.IdPost, "fkPostCategoria_Post");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+            entity.Property(e => e.IdCategoria).HasColumnType("int(11)");
+            entity.Property(e => e.IdPost).HasColumnType("int(11)");
+
             entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Postcategoria)
                 .HasForeignKey(d => d.IdCategoria)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fkPostCategoria_Categoria");
 
             entity.HasOne(d => d.IdPostNavigation).WithMany(p => p.Postcategoria)
                 .HasForeignKey(d => d.IdPost)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fkPostCategoria_Post");
         });
 
@@ -144,6 +151,8 @@ public partial class BlogsContext : DbContext
 
             entity.HasIndex(e => e.IdPost, "fkReporte_Post");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+            entity.Property(e => e.IdPost).HasColumnType("int(11)");
             entity.Property(e => e.Motivo).HasMaxLength(255);
 
             entity.HasOne(d => d.IdPostNavigation).WithMany(p => p.Reporte)
@@ -158,6 +167,7 @@ public partial class BlogsContext : DbContext
 
             entity.ToTable("rol");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Nombre).HasMaxLength(255);
         });
 
@@ -167,6 +177,7 @@ public partial class BlogsContext : DbContext
 
             entity.ToTable("tipoactividad");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Nombre).HasMaxLength(255);
         });
 
@@ -178,6 +189,7 @@ public partial class BlogsContext : DbContext
 
             entity.HasIndex(e => e.IdRol, "fkUsuario_Rol");
 
+            entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Activo)
                 .HasDefaultValueSql("b'0'")
                 .HasColumnType("bit(1)");
@@ -185,6 +197,7 @@ public partial class BlogsContext : DbContext
             entity.Property(e => e.EmailConfirmed)
                 .HasDefaultValueSql("b'0'")
                 .HasColumnType("bit(1)");
+            entity.Property(e => e.IdRol).HasColumnType("int(11)");
             entity.Property(e => e.NombreUsuario).HasMaxLength(255);
             entity.Property(e => e.Password).HasMaxLength(255);
 
