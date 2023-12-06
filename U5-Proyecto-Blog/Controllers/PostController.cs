@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 using U5_Proyecto_Blog.Models.Entities;
+using U5_Proyecto_Blog.Models.ViewModels;
 using U5_Proyecto_Blog.Models.ViewModels.Post;
 using U5_Proyecto_Blog.Repositories;
 
@@ -80,6 +81,25 @@ public class PostController : Controller
                 {
                     IdCategoria = pc.IdCategoria,
                     Nombre = pc.IdCategoriaNavigation.Nombre
+                })
+        };
+
+        return View(viewModel);
+    }
+
+    [Route("post/buscar/{id}")]
+    public IActionResult Buscar(string id)
+    {
+        id = id.Replace("-", " ");
+
+        var viewModel = new BuscarViewModel
+        {
+            Resultados = _postRepository.GetAll()
+                .Where(p => p.Titulo.Contains(id))
+                .Select(p => new PostModel
+                {
+                    Id = p.Id,
+                    Titulo = p.Titulo
                 })
         };
 

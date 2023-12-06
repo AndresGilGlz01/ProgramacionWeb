@@ -1,0 +1,41 @@
+﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Usuarios.AgregarViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Agregar";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+}
+
+<div class="admin-content">
+    <div class="content">
+        <h2 class="page-title">Agregar Usuario</h2>
+        <form action="~/administrar/usuarios/agregar" method="post">
+            <div>
+                <label>Usuario</label>
+                <input asp-for="NombreUsuario" type="text" class="text-input">
+            </div>
+            <div>
+                <label>Email</label>
+                <input asp-for="Email" type="email" class="text-input">
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input asp-for="Password" type="password" class="text-input">
+            </div>
+            <div>
+                <label>Confirmar contraseña</label>
+                <input asp-for="ConfirmarPassword" type="password" name="passwordConf" class="text-input">
+            </div>
+
+            <div>
+                <label>Rol</label>
+                <select asp-for="RolId" asp-items="@(new SelectList(Model.Roles, "Id", "Nombre"))" class="text-input">
+                    <option value="0">Normal</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-big">Agregar usuario</button>
+            </div>
+        </form>
+        @Html.ValidationSummary(true)
+    </div>
+</div>

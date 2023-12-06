@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,7 +16,6 @@
         <div class="logo">
             <h1 class="logotxt"><span>Game</span>Tec</h1>
         </div>
-
         <ul class="nav">
             <li>
                 <a href="#">
@@ -24,16 +24,27 @@
                     <i class="fa fa-chevron-down" style="font-size: .8em;"></i>
                 </a>
                 <ul>
-                    <li><a href="Index.html" class="Salir">Cerrar Sesion</a></li>
+                    <li><a asp-action="index" asp-controller="home" asp-area="administrador">Inicio</a></li>
+                    <li><a asp-action="logout" asp-controller="home" class="Salir">Cerrar Sesion</a></li>
                 </ul>
             </li>
         </ul>
     </header>
 
-    @RenderBody()
+    <div class="admin-wrapper">
+        <div class="left-sidebar">
+            <ul>
+                <li><a href="~/administrar/posts">Administrar Posts</a></li>
+                <li><a href="~/administrar/usuarios">Administrar Usuarios</a></li>
+                <li><a href="~/administrar/categorias">Administrar Categorias</a></li>
+            </ul>
+        </div>
+        
+        @RenderBody()
+
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-    <script src="scripts.js"></script>
+    <script src="~/scripts.js"></script>
 </body>
 </html>

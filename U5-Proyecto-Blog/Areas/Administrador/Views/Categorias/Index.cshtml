@@ -1,0 +1,32 @@
+﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Categorias.IndexViewModel
+@{
+    ViewData["Title"] = "Categorias";
+    Layout = "_LayoutProfile";
+}
+
+<div class="admin-content">
+    <div class="button-group">
+        <a href="~/administrar/categorias/agregar" class="btn btn-big">Agregar Categoria</a>
+    </div>
+    <div class="content">
+        <h2 class="page-title">Administrar Categorias</h2>
+        <table>
+            <thead>
+                <th>N</th>
+                <th>Nombre</th>
+                <th colspan="2">Accion</th>
+            </thead>
+            <tbody>
+                @foreach (var categoria in Model.Categorias)
+                {
+                    <tr>
+                        <td>@categoria.Id</td>
+                        <td>@categoria.Nombre</td>
+                        <td><a href="~/administrar/categorias/editar/@(categoria.Id)" class="edit">Editar</a></td>
+                        <td><a href="~/administrar/categorias/eliminar/@(categoria.Id)" class="delete">Borrar</a></td>
+                    </tr>                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

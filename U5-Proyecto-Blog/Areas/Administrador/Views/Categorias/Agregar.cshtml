@@ -1,0 +1,26 @@
+﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Categorias.AgregarViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Agregar Categoria";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+}
+
+<div class="admin-content">
+    <div class="content">
+        <h2 class="page-title">Agregar Categoria</h2>
+        <form action="~/administrar/categorias/agregar" method="post">
+            <div>
+                <label>Nombre</label>
+                <input asp-for="Nombre" type="text" name="nombre" class="text-input">
+            </div>
+            <div>
+                <label>Descripcion</label>
+                <textarea asp-for="Descripcion" name="descripcion" id="body"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-big">Agregar Categoria</button>
+            </div>
+        </form>
+        @Html.ValidationSummary(true)
+    </div>
+</div>

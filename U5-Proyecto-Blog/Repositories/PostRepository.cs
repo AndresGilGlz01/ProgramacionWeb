@@ -14,5 +14,9 @@ public class PostRepository : Repository<Post>
         .ThenInclude(p => p.IdCategoriaNavigation)
         .FirstOrDefault(p => p.Titulo == titulo);
 
+    public IEnumerable<Post> Search(string titulo) => Context.Post
+        .Include(p => p.IdCreadorNavigation)
+        .Where(p => p.Titulo.Contains(titulo));
+
     public bool Exist(string titulo) => Context.Post.Any(p => p.Titulo == titulo);
 }

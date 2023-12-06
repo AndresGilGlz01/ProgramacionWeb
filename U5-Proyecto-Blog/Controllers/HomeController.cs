@@ -42,37 +42,37 @@ public class HomeController : Controller
     [HttpPost]
     [Route("login")]
     public IActionResult Login(UserLogin userLogin)
-        {
-            if (string.IsNullOrEmpty(userLogin.Contraseña))
-                ModelState.AddModelError(string.Empty, "La contraseña es requerida.");
+    {
+        if (string.IsNullOrEmpty(userLogin.Contraseña))
+            ModelState.AddModelError(string.Empty, "La contraseña es requerida.");
 
-            if (string.IsNullOrEmpty(userLogin.Usuario))
-                ModelState.AddModelError(string.Empty, "El nombre de usuario es requerdio.");
+        if (string.IsNullOrEmpty(userLogin.Usuario))
+            ModelState.AddModelError(string.Empty, "El nombre de usuario es requerdio.");
 
-            if (!ModelState.IsValid)
-                return View(userLogin);
+        if (!ModelState.IsValid)
+            return View(userLogin);
 
-            var usuarioActual = _usuarioRepository.Login(userLogin);
+        var usuarioActual = _usuarioRepository.Login(userLogin);
 
-            if (usuarioActual is null)
-                ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectas.");
+        if (usuarioActual is null)
+            ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectas.");
 
-            if (!ModelState.IsValid)
-                return View(userLogin);
+        if (!ModelState.IsValid)
+            return View(userLogin);
 
-            var claims = new List<Claim>
+        var claims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, usuarioActual!.Id.ToString()),
                 new(ClaimTypes.Name, usuarioActual!.NombreUsuario),
                 new(ClaimTypes.Role, usuarioActual.IdRolNavigation is not null ? usuarioActual.IdRolNavigation.Nombre : "Normal")
             };
 
-            var Identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var Identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
+        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
 
-            return RedirectToAction(nameof(Index));
-        }
+        return RedirectToAction(nameof(Index));
+    }
 
     [Route("signup")]
     public IActionResult SignUp() => View();
@@ -92,19 +92,19 @@ public class HomeController : Controller
 
         if (string.IsNullOrEmpty(viewModel.NombreUsuario))
             ModelState.AddModelError(string.Empty, "El nombre de usuario es requerido");
-        
+
         if (string.IsNullOrEmpty(viewModel.Email))
             ModelState.AddModelError(string.Empty, "El email es requerido");
 
         if (!IsValidEmail(viewModel.Email ?? string.Empty))
             ModelState.AddModelError(string.Empty, "El email no es válido");
 
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid || viewModel is null)
             return View(viewModel);
 
         var entity = new Usuario
         {
-            Email = viewModel.Email,
+            Email = viewModel.Email!,
             EmailConfirmed = 1,
             Activo = 1,
             Password = Encriptador.StringToSHA512(viewModel.Contraseña),
@@ -148,4 +148,7 @@ public class HomeController : Controller
         Regex regex = new Regex(pattern);
         return regex.IsMatch(email);
     }
+
+    [Route("AccessDenied")]
+    public IActionResult AccessDenied() => View();
 }

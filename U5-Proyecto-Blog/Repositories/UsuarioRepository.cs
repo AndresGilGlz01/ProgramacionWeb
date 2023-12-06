@@ -13,4 +13,8 @@ public class UsuarioRepository : Repository<Usuario>
     public Usuario? Login(UserLogin userLogin) => Context.Usuario
         .Include(u => u.IdRolNavigation)
         .FirstOrDefault(u => u.NombreUsuario == userLogin.Usuario && u.Password == Encriptador.StringToSHA512(userLogin.Contraseña));
+
+    public bool ExisteUsuario(string nombreUsuario) => Context.Usuario.Any(u => u.NombreUsuario.ToLower() == nombreUsuario.ToLower());
+
+    public bool ExisteEmail(string email) => Context.Usuario.Any(u => u.Email.ToLower() == email.ToLower());
 }
