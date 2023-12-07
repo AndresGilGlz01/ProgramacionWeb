@@ -1,4 +1,5 @@
 ﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Posts.AgregarViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Agregar Post";
     Layout = "~/Views/Shared/_LayoutProfile.cshtml";
@@ -40,9 +41,12 @@
 
             </div>
             <input type="file" id="fileUpload1" accept="image/png" asp-for="Archivo" />
-            <img id="imagePreview" src="~/imagenes/no-disponible.png" width="250" />
+            <img id="imagePreview" src="~/imagenes/no-disponible.png" width="250" asp-append-version />
             <div>
                 <button type="submit" class="btn btn-big">Agregar Post</button>
+                <a href="~/administrar/posts">
+                    <input type="button" class="btn btn-big" value="Cancelar" id="btnNo" />
+                </a>
             </div>
         </form>
         <script>

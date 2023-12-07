@@ -2,7 +2,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Crear post";
-    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
@@ -46,6 +46,9 @@
 
             <div>
                 <button type="submit" class="btn btn-big">Agregar post</button>
+                <a href="~/">
+                    <input type="button" class="btn btn-big" value="Cancelar" id="btnNo" />
+                </a>
             </div>
         </form>
         <script>

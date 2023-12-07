@@ -1,10 +1,16 @@
-﻿using U5_Proyecto_Blog.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+
+using U5_Proyecto_Blog.Models.Entities;
 
 namespace U5_Proyecto_Blog.Repositories;
 
 public class CategoriaRepository : Repository<Categoria>
 {
     public CategoriaRepository(BlogContext context) : base(context) { }
+
+    public override IEnumerable<Categoria> GetAll() => Context.Categoria
+        .Include(c => c.Postcategoria)
+        .OrderBy(c => c.Nombre);
 
     public bool ExisteCategoria(string nombre) => Context.Categoria.Any(c => c.Nombre.ToLower() == nombre.ToLower());
 

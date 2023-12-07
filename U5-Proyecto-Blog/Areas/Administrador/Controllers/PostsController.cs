@@ -82,7 +82,18 @@ public class PostsController : Controller
 
         if (_postRepository.Exist(viewModel.Titulo)) ModelState.AddModelError(string.Empty, "Titulo de articulo no disponible");
 
-        if (!ModelState.IsValid) return View(viewModel);
+        if (!ModelState.IsValid)
+        {
+            viewModel.Categorias = _categoriaRepository.GetAll()
+                .Select(c => new CategoriaModel
+                {
+                    IdCategoria = c.Id,
+                    Nombre = c.Nombre,
+                    Seleccionada = false
+                }).ToArray();
+
+            return View(viewModel);
+        }
 
         var entity = new Post
         {
@@ -182,6 +193,14 @@ public class PostsController : Controller
         if (!ModelState.IsValid) return View(viewModel);
 
         _postRepository.Update(entity);
+
+        if (viewModel.Archivo is not null)
+        {
+            var fs = System.IO.File.Create($"wwwroot/imagenes/{viewModel.IdPost}.png");
+            viewModel.Archivo.CopyTo(fs);
+            fs.Close();
+        }
+
         return RedirectToAction(nameof(Index));
     }
 

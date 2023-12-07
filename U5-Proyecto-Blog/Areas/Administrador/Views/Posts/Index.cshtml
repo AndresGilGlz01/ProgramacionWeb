@@ -30,6 +30,10 @@
                         {
                             <td><a href="~/administrar/posts/editar/@(post.Id)" class="edit">Editar</a></td>
                         }
+                        else
+                        {
+                            <td></td>
+                        }
                         <td><a href="~/administrar/posts/eliminar/@(post.Id)" class="delete">Borrar</a></td>
                     </tr>
                 }

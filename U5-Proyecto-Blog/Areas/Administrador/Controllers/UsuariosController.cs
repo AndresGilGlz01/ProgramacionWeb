@@ -30,6 +30,7 @@ public class UsuariosController : Controller
         {
             Usuarios = _usuarioRepository
                 .GetAll()
+                .Where(u => u.NombreUsuario != User.Identity!.Name)
                 .Select(u => new UsuarioModel
                 {
                     Id = u.Id,
