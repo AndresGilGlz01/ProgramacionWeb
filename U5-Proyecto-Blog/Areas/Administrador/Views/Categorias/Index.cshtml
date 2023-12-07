@@ -20,10 +20,10 @@
                 @foreach (var categoria in Model.Categorias)
                 {
                     <tr>
-                        <td>@categoria.Id</td>
+                        <td>@categoria.IdCategoria</td>
                         <td>@categoria.Nombre</td>
-                        <td><a href="~/administrar/categorias/editar/@(categoria.Id)" class="edit">Editar</a></td>
-                        <td><a href="~/administrar/categorias/eliminar/@(categoria.Id)" class="delete">Borrar</a></td>
+                        <td><a href="~/administrar/categorias/editar/@(categoria.IdCategoria)" class="edit">Editar</a></td>
+                        <td><a href="~/administrar/categorias/eliminar/@(categoria.IdCategoria)" class="delete">Borrar</a></td>
                     </tr>                    
                 }
             </tbody>

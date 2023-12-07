@@ -1,7 +1,6 @@
-﻿@model U5_Proyecto_Blog.Models.ViewModels.Post.GuardarPostViewModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Posts.AgregarViewModel
 @{
-    ViewData["Title"] = "Crear post";
+    ViewData["Title"] = "Agregar Post";
     Layout = "~/Views/Shared/_LayoutProfile.cshtml";
 }
 
@@ -15,7 +14,7 @@
 <div class="admin-content">
     <div class="content">
         <h2 class="page-title">Administrar posts</h2>
-        <form method="post" asp-controller="Post" asp-action="Create" enctype="multipart/form-data">
+        <form action="~/administrar/posts/agregar" method="post" enctype="multipart/form-data">
             <div>
                 <label>Titulo</label>
                 <input asp-for="Titulo" class="text-input">
@@ -34,18 +33,16 @@
                     <label for="@(Model.Categorias[i].Nombre)">@Model.Categorias[i].Nombre</label>
                     <input asp-for="Categorias[i].IdCategoria" hidden />
                     <input asp-for="Categorias[i].Nombre" hidden />
-                    <input asp-for="Categorias[i].Seleccionada" id="@(Model.Categorias[i].Nombre)" />
+                    <input asp-for="Categorias[i].Seleccionada" type="checkbox" id="@(Model.Categorias[i].Nombre)" />
                 }
 
                 @Html.ValidationSummary(true)
 
             </div>
-
             <input type="file" id="fileUpload1" accept="image/png" asp-for="Archivo" />
             <img id="imagePreview" src="~/imagenes/no-disponible.png" width="250" />
-
             <div>
-                <button type="submit" class="btn btn-big">Agregar post</button>
+                <button type="submit" class="btn btn-big">Agregar Post</button>
             </div>
         </form>
         <script>
@@ -58,7 +55,6 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-
             document.getElementById('fileUpload1').addEventListener('change', function () {
                 mostrarImagen(this);
             });

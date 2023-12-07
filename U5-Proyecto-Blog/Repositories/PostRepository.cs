@@ -7,7 +7,9 @@ public class PostRepository : Repository<Post>
 {
     public PostRepository(BlogContext context) : base(context) { }
 
-    public override IEnumerable<Post> GetAll() => Context.Post.Include(p => p.IdCreadorNavigation);
+    public override IEnumerable<Post> GetAll() => Context.Post
+        .Include(p => p.Postcategoria)
+        .Include(p => p.IdCreadorNavigation);
 
     public Post? GetByTitulo(string titulo) => Context.Post
         .Include(p => p.Postcategoria)

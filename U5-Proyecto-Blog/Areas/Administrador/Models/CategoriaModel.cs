@@ -2,6 +2,7 @@
 
 public class CategoriaModel
 {
-    public int Id { get; set; }
+    public int IdCategoria { get; set; }
     public string Nombre { get; set; } = null!;
+    public bool Seleccionada { get; set; }
 }

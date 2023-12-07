@@ -27,7 +27,15 @@ public class HomeController : Controller
     {
         if (User.Identity is not null && User.Identity.IsAuthenticated)
         {
-            return RedirectToRoute(new { action = "Index", controller = "Post" });
+            if (User.IsInRole("Administrador"))
+            {
+                return RedirectToRoute(new { action = "Index", controller = "Usuarios", area = "Administrador" });
+            }
+            else
+            {
+                return RedirectToRoute(new { action = "Index", controller = "Post" });
+            }
+
         }
         else
         {

@@ -28,7 +28,7 @@ public class CategoriasController : Controller
                 .GetAll()
                 .Select(c => new CategoriaModel
                 {
-                    Id = c.Id,
+                    IdCategoria = c.Id,
                     Nombre = c.Nombre,
                 })
         };
