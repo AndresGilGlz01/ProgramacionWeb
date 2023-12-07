@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using U5_Proyecto_Blog.Areas.Administrador.Models;
 using U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Categorias;
+using U5_Proyecto_Blog.Models.Entities;
 using U5_Proyecto_Blog.Repositories;
 
 namespace U5_Proyecto_Blog.Areas.Administrador.Controllers;
@@ -43,17 +44,25 @@ public class CategoriasController : Controller
     public IActionResult Agregar(AgregarViewModel viewModel)
     {
         if (string.IsNullOrWhiteSpace(viewModel.Nombre))
-            ModelState.AddModelError(nameof(viewModel.Nombre), "El nombre es requerido.");
+            ModelState.AddModelError(string.Empty, "El nombre es requerido.");
 
         if (string.IsNullOrWhiteSpace(viewModel.Descripcion))
-            ModelState.AddModelError(nameof(viewModel.Descripcion), "La descripción es requerida.");
+            ModelState.AddModelError(string.Empty, "La descripción es requerida.");
 
         if (_categoriaRepository.ExisteCategoria(viewModel.Nombre))
-            ModelState.AddModelError(nameof(viewModel.Nombre), "Ya existe una categoría con ese nombre.");
+            ModelState.AddModelError(string.Empty, "Ya existe una categoría con ese nombre.");
 
         if (!ModelState.IsValid)
             return View(viewModel);
         
+        var entity = new Categoria()
+        {
+            Nombre = viewModel.Nombre,
+            Descripcion = viewModel.Descripcion,
+        };
+
+        _categoriaRepository.Insert(entity);
+
         return RedirectToAction(nameof(Index));
     }
 
@@ -80,10 +89,19 @@ public class CategoriasController : Controller
     public IActionResult Editar(EditarViewModel viewModel)
     {
         if (string.IsNullOrWhiteSpace(viewModel.Nombre))
-            ModelState.AddModelError(nameof(viewModel.Nombre), "El nombre es requerido.");
+        {
+            ModelState.AddModelError(string.Empty, "El nombre es requerido.");
+        }
+        else
+        {
+            if (_categoriaRepository.ExisteCategoria(viewModel.Nombre, viewModel.Id))
+                ModelState.AddModelError(string.Empty, "Ya existe una categoría con ese nombre.");
+        }
 
         if (string.IsNullOrWhiteSpace(viewModel.Descripcion))
-            ModelState.AddModelError(nameof(viewModel.Descripcion), "La descripción es requerida.");
+        {
+            ModelState.AddModelError(string.Empty, "La descripción es requerida.");
+        }
 
         if (!ModelState.IsValid)
             return View(viewModel);

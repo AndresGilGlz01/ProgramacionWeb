@@ -7,8 +7,8 @@
 
 <div class="admin-content">
     <div class="content">
-        <h2 class="page-title">Agregar Categoria</h2>
-        <form action="~/administrar/categorias/agregar" method="post">
+        <h2 class="page-title">Editar Categoria</h2>
+        <form action="~/administrar/categorias/editar" method="post">
             <input asp-for="Id" type="hidden">
             <div>
                 <label>Nombre</label>
@@ -19,7 +19,10 @@
                 <textarea asp-for="Descripcion" name="descripcion" id="body"></textarea>
             </div>
             <div>
-                <button type="submit" class="btn btn-big">Agregar Categoria</button>
+                <button type="submit" class="btn btn-big">Editar Categoria</button>
+                <a href="~/administrar/usuarios">
+                    <input type="button" class="btn btn-big" value="Cancelar" id="btnNo" />
+                </a>
             </div>
         </form>
         @Html.ValidationSummary(true)
