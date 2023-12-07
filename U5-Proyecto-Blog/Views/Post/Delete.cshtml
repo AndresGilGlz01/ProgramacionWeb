@@ -1,8 +1,24 @@
-﻿
+﻿@model U5_Proyecto_Blog.Models.ViewModels.Post.DeleteViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<div class="content">
+    <div class="content-delete">
+        <h1>Eliminar Post</h1>
+        <p>¿Está seguro de eliminar el Post "@Model.Titulo"?</p>
 
+        <form action="~/eliminar/post" method="post">
+            <input asp-for="IdPost" type="hidden" />
+            <div class="button-group">
+                <p id="error">@Html.ValidationSummary(true)</p>
+                <input type="submit" class="btn btn-big" value="Si" id="btnSi" />
+                <a href="~/post/@(Model.Titulo.ToLower().Replace(" ", "-"))">
+                    <input type="button" class="btn btn-big" value="No" id="btnNo" />
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -81,7 +81,8 @@ public class PostController : Controller
                 {
                     IdCategoria = pc.IdCategoria,
                     Nombre = pc.IdCategoriaNavigation.Nombre
-                })
+                }),
+            Pertenece = post.IdCreadorNavigation.NombreUsuario == User.Identity!.Name
         };
 
         return View(viewModel);
@@ -204,8 +205,8 @@ public class PostController : Controller
         return View(viewModel);
     }
 
-    [HttpPost]
     [Route("editar/post")]
+    [HttpPost]
     public IActionResult Edit(GuardarPostViewModel viewModel)
     {
         var entity = _postRepository.GetById(viewModel.IdPost);
@@ -244,20 +245,48 @@ public class PostController : Controller
         if (!ModelState.IsValid) return View(viewModel);
 
         _postRepository.Update(entity);
+
+        if (viewModel.Archivo is not null)
+        {
+            var fs = System.IO.File.Create($"wwwroot/imagenes/{viewModel.IdPost}.png");
+            viewModel.Archivo.CopyTo(fs);
+            fs.Close();
+        }
+
         return RedirectToAction(nameof(Index));
     }
 
     [Route("eliminar/post/{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(string id)
     {
-        return View();
+        id = id.Replace("-", " ");
+
+        var post = _postRepository.GetByTitulo(id);
+
+        if (post is null) return RedirectToAction(nameof(Index));
+
+        var viewModel = new DeleteViewModel
+        {
+            IdPost = post.Id,
+            Titulo = post.Titulo
+        };
+
+        return View(viewModel);
     }
 
     [HttpPost]
     [Route("eliminar/post")]
-    public IActionResult Delete(Post post)
+    public IActionResult Delete(DeleteViewModel viewModel)
     {
-        // eliminar imagen del post
-        return View();
+        var entity = _postRepository.GetById(viewModel.IdPost);
+
+        if (entity is null) return RedirectToAction(nameof(Index));
+
+        _postRepository.Delete(entity);
+
+        if (System.IO.File.Exists($"wwwroot/imagenes/{entity.Id}.png"))
+            System.IO.File.Delete($"wwwroot/imagenes/{entity.Id}.png");
+
+        return RedirectToAction(nameof(Index));
     }
 }

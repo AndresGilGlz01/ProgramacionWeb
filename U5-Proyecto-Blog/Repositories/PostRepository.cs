@@ -12,6 +12,7 @@ public class PostRepository : Repository<Post>
         .Include(p => p.IdCreadorNavigation);
 
     public Post? GetByTitulo(string titulo) => Context.Post
+        .Include(p => p.IdCreadorNavigation)
         .Include(p => p.Postcategoria)
         .ThenInclude(p => p.IdCategoriaNavigation)
         .FirstOrDefault(p => p.Titulo == titulo);

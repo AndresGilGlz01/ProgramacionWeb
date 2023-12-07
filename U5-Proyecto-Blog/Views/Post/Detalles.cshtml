@@ -17,12 +17,21 @@
             <div class="section topics">
                 <h2 class="section-title">Categorias del Post</h2>
                 <ul>
-                    @foreach(var categoria in Model.Categorias)
+                    @foreach (var categoria in Model.Categorias)
                     {
                         <li><a href="~/categoria/@categoria.Nombre.ToLower().Replace(" ", "-")">@categoria.Nombre</a></li>
                     }
                 </ul>
             </div>
+            @if (Model.Pertenece)
+            {
+                <a href="~/editar/post/@Model.Titulo.ToLower().Replace(" ", "-")" style="cursor: pointer">
+                    <input type="button" class="btn btn-big" value="Editar" id="btnNo" />
+                </a>
+                <a href="~/eliminar/post/@Model.Titulo.ToLower().Replace(" ", "-")" style="cursor: pointer">
+                    <input type="button" class="btn btn-big" value="Eliminar" id="btnNo" />
+                </a>
+            }
         </div>
     </div>
 </div>

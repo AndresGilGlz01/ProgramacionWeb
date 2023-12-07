@@ -2,7 +2,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Editar";
-    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
@@ -11,45 +11,61 @@
         selector: '#mytextarea'
     });
 </script>
-<div class="admin-wrapper">
-    <div class="left-sidebar">
-        <ul>
-            <li><a asp-controller="Posts" asp-action="Index">Administrar Posts</a></li>
-        </ul>
-    </div>
-    <div class="admin-content">
-        <div class="content">
-            <h2 class="page-title">Administrar posts</h2>
-            <form method="post" asp-controller="Post" asp-action="Edit">
-                <input asp-for="IdPost" hidden/>
-                <div>
-                    <label>Titulo</label>
-                    <input asp-for="Titulo" class="text-input">
-                </div>
-                <div>
-                    <label>Texto</label>
-                    <textarea name="Contenido" id="mytextarea">
-                        @Html.Raw(Model.Contenido)
+
+<div class="admin-content">
+    <div class="content">
+        <h2 class="page-title">Administrar posts</h2>
+        <form action="~/editar/post" method="post" enctype="multipart/form-data">
+            <input asp-for="IdPost" hidden />
+            <div>
+                <label>Titulo</label>
+                <input asp-for="Titulo" class="text-input">
+            </div>
+            <div>
+                <label>Texto</label>
+                <textarea name="Contenido" id="mytextarea">
+                    @Html.Raw(Model.Contenido)
                     </textarea>
-                </div>
-                <div>
-                    <label>Categorias</label> <br />
+            </div>
+            <div>
+                <label>Categorias</label> <br />
 
-                    @for (var i = 0; i < Model.Categorias.Count(); i++)
-                    {
-                        <label for="@(Model.Categorias[i].Nombre)">@Model.Categorias[i].Nombre</label>
-                        <input asp-for="Categorias[i].IdCategoria" hidden />
-                        <input asp-for="Categorias[i].Nombre" hidden />
-                        <input asp-for="Categorias[i].Seleccionada" id="@(Model.Categorias[i].Nombre)" />
+                @for (var i = 0; i < Model.Categorias.Count(); i++)
+                {
+                    <label for="@(Model.Categorias[i].Nombre)">@Model.Categorias[i].Nombre</label>
+                    <input asp-for="Categorias[i].IdCategoria" hidden />
+                    <input asp-for="Categorias[i].Nombre" hidden />
+                    <input asp-for="Categorias[i].Seleccionada" id="@(Model.Categorias[i].Nombre)" />
+                }
+
+                @Html.ValidationSummary(true)
+
+            </div>
+
+            <input type="file" id="fileUpload1" accept="image/png" asp-for="Archivo" />
+            <img id="imagePreview" src="~/imagenes/@(Model.IdPost).png" width="250" />
+
+            <div>
+                <button type="submit" class="btn btn-big">Editar Post</button>
+                <a href="~/post/@(Model.Titulo.ToLower().Replace(" ", "-"))">
+                    <input type="button" class="btn btn-big" value="Cancelar" id="btnNo" />
+                </a>
+            </div>
+        </form>
+        <script>
+            function mostrarImagen(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('imagePreview').src = e.target.result;
                     }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
 
-                    @Html.ValidationSummary(true)
-
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-big">Guardar post</button>
-                </div>
-            </form>
-        </div>
+            document.getElementById('fileUpload1').addEventListener('change', function () {
+                mostrarImagen(this);
+            });
+        </script>
     </div>
 </div>
