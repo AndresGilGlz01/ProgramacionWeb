@@ -1,0 +1,20 @@
+﻿@model U5_Proyecto_Blog.Areas.Administrador.Models.ViewModels.Categorias.EliminarViewModel
+@{
+    ViewData["Title"] = "Eliminar Categoria";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
+}
+
+<div class="content-delete">
+    <h1>Eliminar Categoria</h1>
+    <p>¿Está seguro de eliminar la categoria "@Model.Nombre"?</p>
+
+    <form action="~/administrar/usuarios/eliminar" method="post">
+        <div class="button-group">
+            <p id="error">@Html.ValidationSummary(true)</p>
+            <input type="submit" class="btn btn-big" value="Si" id="btnSi" />
+            <a href="~/administrar/categorias">
+                <input type="button" class="btn btn-big" value="No" id="btnNo" />
+            </a>
+        </div>
+    </form>
+</div>

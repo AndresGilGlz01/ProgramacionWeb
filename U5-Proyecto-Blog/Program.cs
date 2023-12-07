@@ -17,6 +17,7 @@ builder.Services.AddTransient<UsuarioRepository>();
 builder.Services.AddTransient<PostRepository>();
 builder.Services.AddTransient<CategoriaRepository>();
 builder.Services.AddTransient<Repository<Postcategoria>>();
+builder.Services.AddTransient<Repository<Rol>>();
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
