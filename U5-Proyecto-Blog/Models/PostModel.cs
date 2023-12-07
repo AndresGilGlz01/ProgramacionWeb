@@ -1,4 +1,4 @@
-﻿namespace U5_Proyecto_Blog.Models.ViewModels;
+﻿namespace U5_Proyecto_Blog.Models;
 
 public class PostModel
 {

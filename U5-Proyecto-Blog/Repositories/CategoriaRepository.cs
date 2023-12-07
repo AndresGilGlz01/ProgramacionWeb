@@ -10,6 +10,7 @@ public class CategoriaRepository : Repository<Categoria>
 
     public override IEnumerable<Categoria> GetAll() => Context.Categoria
         .Include(c => c.Postcategoria)
+        .ThenInclude(c => c.IdPostNavigation)
         .OrderBy(c => c.Nombre);
 
     public bool ExisteCategoria(string nombre) => Context.Categoria.Any(c => c.Nombre.ToLower() == nombre.ToLower());

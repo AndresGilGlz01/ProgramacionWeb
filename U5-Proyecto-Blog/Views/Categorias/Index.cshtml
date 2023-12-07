@@ -1,0 +1,32 @@
+﻿@model U5_Proyecto_Blog.Models.ViewModels.Categorias.IndexViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="recent-post-title">Categorias</h1>
+
+<div class="content clearfix">
+    @foreach (var categoria in Model.Categorias)
+    {
+        <div class="main-cont">
+            <h2 class="recent-post-title">@categoria.Nombre</h2>
+            <small>@categoria.Descripcion</small>
+
+            @foreach (var post in categoria.Posts)
+            {
+                <a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">
+                    <div class="post">
+                        <img src="~/imagenes/@(post.Id).png" alt="" width="90" class="post-img" asp-append-version>
+                        <div class="post-preview">
+                            <h2>
+                                @post.Titulo
+                            </h2>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</div>

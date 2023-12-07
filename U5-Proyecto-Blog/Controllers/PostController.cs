@@ -97,7 +97,7 @@ public class PostController : Controller
         {
             Resultados = _postRepository.GetAll()
                 .Where(p => p.Titulo.Contains(id))
-                .Select(p => new PostModel
+                .Select(p => new U5_Proyecto_Blog.Models.PostModel
                 {
                     Id = p.Id,
                     Titulo = p.Titulo
