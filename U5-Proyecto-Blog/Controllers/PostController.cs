@@ -10,7 +10,6 @@ using U5_Proyecto_Blog.Repositories;
 
 namespace U5_Proyecto_Blog.Controllers;
 
-[Authorize]
 public class PostController : Controller
 {
     PostRepository _postRepository;
@@ -33,7 +32,7 @@ public class PostController : Controller
         {
             PostRecomendados = _postRepository.GetAll()
                 .OrderBy(p => Guid.NewGuid())
-                .Take(3)
+                .Take(5)
                 .Select(p => new RecomendadoPostModel
                 {
                     Id = p.Id,
@@ -44,7 +43,6 @@ public class PostController : Controller
                 }),
             UltimosPost = _postRepository.GetAll()
                 .OrderByDescending(p => p.FechaPublicacion)
-                .Take(5)
                 .Select(p => new UltimoPostModel
                 {
                     Id = p.Id,
@@ -63,6 +61,7 @@ public class PostController : Controller
         return View(viewModel);
     }
 
+    [Authorize]
     [Route("post/{id}")]
     public IActionResult Detalles(string id)
     {
@@ -88,25 +87,28 @@ public class PostController : Controller
         return View(viewModel);
     }
 
-    [Route("post/buscar/{id}")]
-    public IActionResult Buscar(string id)
+    [Authorize]
+    [Route("buscar")]
+    public IActionResult Buscar([FromQuery] string titulo)
     {
-        id = id.Replace("-", " ");
-
         var viewModel = new BuscarViewModel
         {
             Resultados = _postRepository.GetAll()
-                .Where(p => p.Titulo.Contains(id))
-                .Select(p => new U5_Proyecto_Blog.Models.PostModel
+                .Where(p => p.Titulo.Contains(titulo))
+                .Select(p => new UltimoPostModel
                 {
                     Id = p.Id,
-                    Titulo = p.Titulo
+                    Titulo = p.Titulo,
+                    Imagen = p.Titulo,
+                    Fecha = p.FechaPublicacion,
+                    Creador = p.IdCreadorNavigation.NombreUsuario
                 })
         };
 
         return View(viewModel);
     }
 
+    [Authorize]
     [Route("crear/post")]
     public IActionResult Create()
     {
@@ -124,6 +126,7 @@ public class PostController : Controller
         return View(viewModel);
     }
 
+    [Authorize]
     [HttpPost]
     [Route("crear/post")]
     public IActionResult Create(GuardarPostViewModel viewModel)
@@ -174,6 +177,7 @@ public class PostController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize]
     [Route("editar/post/{id}")]
     public IActionResult Edit(string id)
     {
@@ -205,6 +209,7 @@ public class PostController : Controller
         return View(viewModel);
     }
 
+    [Authorize]
     [Route("editar/post")]
     [HttpPost]
     public IActionResult Edit(GuardarPostViewModel viewModel)
@@ -256,6 +261,7 @@ public class PostController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize]
     [Route("eliminar/post/{id}")]
     public IActionResult Delete(string id)
     {
@@ -274,6 +280,7 @@ public class PostController : Controller
         return View(viewModel);
     }
 
+    [Authorize]
     [HttpPost]
     [Route("eliminar/post")]
     public IActionResult Delete(DeleteViewModel viewModel)

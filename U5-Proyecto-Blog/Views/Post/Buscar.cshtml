@@ -1,5 +1,34 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model U5_Proyecto_Blog.Models.ViewModels.Post.BuscarViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Buscar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="content clearfix">
+    <div class="main-cont">
+        <h1 class="recent-post-title">Ultimos Post</h1>
+        @foreach (var post in Model.Resultados)
+        {
+            <div class="post">
+                <img src="~/imagenes/@(post.Id).png" alt="" class="post-img" asp-append-version>
+                <div class="post-preview">
+                    <h2><a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">@post.Titulo</a></h2>
+                    <i class="far fa-user"> @post.Creador</i>
+                    &nbsp;
+                    <i class="far fa-calendar"> @post.Fecha.ToShortDateString()</i>
+                    <p class="prev-text">@post.Descripcion</p>
+                    <a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))" class="btn read">Leer Mas</a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="sidebar">
+        <div class="section search">
+            <h2 class="section-title">Buscar</h2>
+            <form action="~/buscar">
+                <input type="text" name="titulo" class="text-input" placeholder="Buscar...">
+                <input type="submit" value="Buscar" class="btn btn-big" style="margin-top: 5px" />
+            </form>
+        </div>
+    </div>
+</div>

@@ -44,4 +44,28 @@ public class CategoriasController : Controller
 
         return View(viewModel);
     }
+
+    [Route("categoria/{id}")]
+    public IActionResult Categoria(string id)
+    {
+        id = id.Replace("-", " ");
+
+        var categoria = _categoriaRepository.GetByName(id);
+
+        if (categoria is null) return RedirectToAction(nameof(Index));
+
+        var viewModel = new CategoriaViewModel
+        {
+            Nombre = categoria.Nombre,
+            Descripcion = categoria.Descripcion ?? "Sin descripcion",
+            Posts = categoria.Postcategoria
+                .Select(pc => new PostModel
+                {
+                    Id = pc.IdPostNavigation.Id,
+                    Titulo = pc.IdPostNavigation.Titulo
+                }),
+        };
+
+        return View(viewModel);
+    }
 }

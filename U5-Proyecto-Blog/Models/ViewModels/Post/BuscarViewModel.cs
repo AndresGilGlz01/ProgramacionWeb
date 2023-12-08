@@ -2,5 +2,5 @@
 
 public class BuscarViewModel
 {
-    public IEnumerable<PostModel> Resultados { get; set; } = null!;
+    public IEnumerable<UltimoPostModel> Resultados { get; set; } = null!;
 }

@@ -16,4 +16,9 @@ public class CategoriaRepository : Repository<Categoria>
     public bool ExisteCategoria(string nombre) => Context.Categoria.Any(c => c.Nombre.ToLower() == nombre.ToLower());
 
     public bool ExisteCategoria(string nombre, int id) => Context.Categoria.Any(c => c.Nombre.ToLower() == nombre.ToLower() && c.Id != id);
+
+    public Categoria? GetByName(string id) => Context.Categoria
+        .Include(c => c.Postcategoria)
+        .ThenInclude(c => c.IdPostNavigation)
+        .FirstOrDefault(c => c.Nombre.ToLower() == id.ToLower());
 }

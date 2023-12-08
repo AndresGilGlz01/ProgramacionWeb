@@ -1,0 +1,48 @@
+﻿@model U5_Proyecto_Blog.Models.ViewModels.Categorias.CategoriaViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Categoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content clearfix">
+    <div class="main-cont">
+        <h2 class="recent-post-title">@Model.Nombre</h2>
+        <small>@Model.Descripcion</small>
+
+        <div class="posts">
+            @foreach (var post in Model.Posts)
+            {
+                <a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">
+                    <div class="post">
+                        <div>
+                            <h2>
+                                @post.Titulo
+                            </h2>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+    <style>
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .post {
+            padding: 10px;
+            color: #333;
+            text-decoration: underline;
+            min-width: 200px;
+            width: 200px;
+            text-overflow: ellipsis;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            height: auto !important;
+        }
+    </style>
+</div>

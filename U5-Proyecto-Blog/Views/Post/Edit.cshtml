@@ -43,7 +43,7 @@
             </div>
 
             <input type="file" id="fileUpload1" accept="image/png" asp-for="Archivo" />
-            <img id="imagePreview" src="~/imagenes/@(Model.IdPost).png" width="250" />
+            <img id="imagePreview" src="~/imagenes/@(Model.IdPost).png" width="250" asp-append-version/>
 
             <div>
                 <button type="submit" class="btn btn-big">Editar Post</button>

@@ -14,19 +14,39 @@
             <h2 class="recent-post-title">@categoria.Nombre</h2>
             <small>@categoria.Descripcion</small>
 
-            @foreach (var post in categoria.Posts)
-            {
-                <a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">
-                    <div class="post">
-                        <img src="~/imagenes/@(post.Id).png" alt="" width="90" class="post-img" asp-append-version>
-                        <div class="post-preview">
-                            <h2>
-                                @post.Titulo
-                            </h2>
+            <div class="posts">
+                @foreach (var post in categoria.Posts)
+                {
+                    <a href="~/post/@(post.Titulo.ToLower().Replace(" ", "-"))">
+                        <div class="post">
+                            <div>
+                                <h2>
+                                    @post.Titulo
+                                </h2>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
+                    </a>
+                }
+            </div>
         </div>
     }
+    <style>
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .post {
+            padding: 10px;
+            color: #333;
+            text-decoration: underline;
+            min-width: 200px;
+            width: 200px;
+            text-overflow: ellipsis;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            height: auto !important;
+        }
+    </style>
 </div>

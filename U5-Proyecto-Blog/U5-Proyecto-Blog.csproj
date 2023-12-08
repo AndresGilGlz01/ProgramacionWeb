@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Post\Buscar.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Areas\Administrador\Data\" />
   </ItemGroup>
 
@@ -25,18 +21,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="TinyMCE" Version="6.7.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Post\Buscar.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Post\Buscar.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Post\Buscar.cshtml" />
   </ItemGroup>
 
 </Project>
