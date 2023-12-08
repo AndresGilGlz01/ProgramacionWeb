@@ -94,7 +94,7 @@ public class PostController : Controller
         var viewModel = new BuscarViewModel
         {
             Resultados = _postRepository.GetAll()
-                .Where(p => p.Titulo.Contains(titulo))
+                .Where(p => p.Titulo.ToLower().Contains(titulo.ToLower()))
                 .Select(p => new UltimoPostModel
                 {
                     Id = p.Id,
